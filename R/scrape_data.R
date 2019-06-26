@@ -3,11 +3,16 @@
 #'
 #' Get the data from one initial post by entering its url
 #'
-#' @param url URL to the page to scrape
-#' @param From The starting page number
-#' @param To The ending page number
+#' @param url URL to the post to scrape
+#' @param From The starting page number. Default is the first page
+#' @param To The ending page number. Default is the last page
 #'
 #' @return A data frame
+#'
+#' @example
+#' ## get two pages of data from the post titled "Can Gastritis be cured?"
+#' scrape_one_post(url = "https://patient.info/forums/discuss/can-gastritis-be-cured--613999",
+#'                 From = 1, To = 2)
 #'
 #' @export
 scrape_one_post <- function(url, From = 1L, To = length(urls)) {
@@ -56,9 +61,14 @@ scrape_one_post <- function(url, From = 1L, To = length(urls)) {
 #' Get all the posts and all the replies to the posts from one group by entering its url
 #'
 #' @param group_url URL to the page to scrape
-#' @param random_post_number Random number of posts to scrape
+#' @param random_post_number The number of random posts to scrape. Default is NULL, which means scrape the total number of posts
 #'
 #' @return A data frame
+#'
+#' @example
+#' ## get the data of 100 random posts from the group "Abdominal Disorders"
+#' scrape_one_group(group_url = "https://patient.info/forums/discuss/browse/abdominal-disorders-3321",
+#'                  random_post_number = 100)
 #'
 #' @export
 scrape_one_group <- function(group_url, random_post_number = NULL) {

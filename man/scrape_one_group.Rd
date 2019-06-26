@@ -9,7 +9,7 @@ scrape_one_group(group_url, random_post_number = NULL)
 \arguments{
 \item{group_url}{URL to the page to scrape}
 
-\item{random_post_number}{Random number of posts to scrape}
+\item{random_post_number}{The number of random posts to scrape. Default is NULL, which means scrape the total number of posts}
 }
 \value{
 A data frame

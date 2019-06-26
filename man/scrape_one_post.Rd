@@ -7,11 +7,11 @@
 scrape_one_post(url, From = 1L, To = length(urls))
 }
 \arguments{
-\item{url}{URL to the page to scrape}
+\item{url}{URL to the post to scrape}
 
-\item{From}{The starting page number}
+\item{From}{The starting page number. Default is the first page}
 
-\item{To}{The ending page number}
+\item{To}{The ending page number. Default is the last page}
 }
 \value{
 A data frame
