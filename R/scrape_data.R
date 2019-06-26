@@ -9,7 +9,7 @@
 #'
 #' @return A data frame
 #'
-#' @example
+#' @examples
 #' ## get two pages of data from the post titled "Can Gastritis be cured?"
 #' scrape_one_post(url = "https://patient.info/forums/discuss/can-gastritis-be-cured--613999",
 #'                 From = 1, To = 2)
@@ -65,7 +65,7 @@ scrape_one_post <- function(url, From = 1L, To = length(urls)) {
 #'
 #' @return A data frame
 #'
-#' @example
+#' @examples
 #' ## get the data of 100 random posts from the group "Abdominal Disorders"
 #' scrape_one_group(group_url = "https://patient.info/forums/discuss/browse/abdominal-disorders-3321",
 #'                  random_post_number = 100)

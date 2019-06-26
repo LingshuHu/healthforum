@@ -17,3 +17,9 @@ A data frame
 \description{
 Get all the posts and all the replies to the posts from one group by entering its url
 }
+\examples{
+## get the data of 100 random posts from the group "Abdominal Disorders"
+scrape_one_group(group_url = "https://patient.info/forums/discuss/browse/abdominal-disorders-3321",
+                 random_post_number = 100)
+
+}

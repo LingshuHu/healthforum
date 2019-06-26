@@ -19,3 +19,9 @@ A data frame
 \description{
 Get the data from one initial post by entering its url
 }
+\examples{
+## get two pages of data from the post titled "Can Gastritis be cured?"
+scrape_one_post(url = "https://patient.info/forums/discuss/can-gastritis-be-cured--613999",
+                From = 1, To = 2)
+
+}
