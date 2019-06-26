@@ -11,5 +11,6 @@ LazyData: true
 Imports: 
     rvest,
     magrittr,
-    xml2
+    xml2,
+    purrr
 RoxygenNote: 6.1.1
