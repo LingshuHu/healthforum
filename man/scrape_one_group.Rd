@@ -4,10 +4,12 @@
 \alias{scrape_one_group}
 \title{Scrape one group}
 \usage{
-scrape_one_group(group_url)
+scrape_one_group(group_url, random_post_number = NULL)
 }
 \arguments{
 \item{group_url}{URL to the page to scrape}
+
+\item{random_post_number}{Random number of posts to scrape}
 }
 \value{
 A data frame
