@@ -5,4 +5,10 @@ test_that("scrape_one_post works", {
   expect_true(is.data.frame(gas))
   expect_gt(ncol(gas), 4)
   expect_gt(nrow(gas), 4)
+  expect_error(
+    scrape_one_post()
+  )
+  expect_null(
+    scrape_one_post("https://patient.info/doctor/bronchiolitis-pro", 1, 10)
+  )
 })
