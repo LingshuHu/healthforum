@@ -5,7 +5,7 @@
 #'
 #' @param url URL to the post to scrape
 #' @param From The starting page number. Default is the first page
-#' @param To The ending page number. Default is the last page
+#' @param To The ending page number. Default (Inf) is the last page (so all pages)
 #'
 #' @return A data frame
 #'
@@ -15,7 +15,7 @@
 #'                 From = 1, To = 2)
 #'
 #' @export
-scrape_one_post <- function(url, From = 1L, To = length(urls)) {
+scrape_one_post <- function(url, From = 1L, To = Inf) {
   page <- xml2::read_html(url)
   page_numbers <- get_page_numbers(page)
   if (length(page_numbers) == 0L) {
@@ -34,6 +34,12 @@ scrape_one_post <- function(url, From = 1L, To = length(urls)) {
       return(df)
     }
   } else {
+    if (To < max(page_numbers)) {
+      page_numbers <- page_numbers[page_numbers <= To]
+    }
+    if (From < min(page_numbers)) {
+      page_numbers <- page_numbers[page_numbers <= From]
+    }
     urls <- sprintf("%s?page=%s", url, page_numbers-1)
     page_list <- tryCatch(
       lapply(urls[From:To], get_one_page),
