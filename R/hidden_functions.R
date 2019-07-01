@@ -59,10 +59,15 @@ get_one_page <- function(url) {
   post_title <- posts %>% rvest::html_node(".post__title") %>% rvest::html_text(trim = TRUE)
   text <- posts %>% rvest::html_nodes(".post__content") %>% rvest::html_text(trim = TRUE)
   ## combine to a dataframe
-  df <- as.data.frame(cbind(posts_id, post_time, types = unlist(types), names,
-                            reply_names = unlist(reply_names),
-                            likes = unlist(likes), replies = unlist(replies),
-                            text))
+  df <- data.frame(posts_id = posts_id,
+                   post_time = as.POSIXct(post_time, origin = "1970-01-01"),
+                   types = unlist(types),
+                   user_names = names,
+                   reply_names = unlist(reply_names),
+                   likes = as.numeric(unlist(likes)),
+                   replies = as.numeric(unlist(replies)),
+                   text = text,
+                   stringAsFactors = FALSE)
   df$post_title <- post_title[1]
   return(df)
 }
