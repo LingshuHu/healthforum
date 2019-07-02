@@ -11,8 +11,8 @@
 #'
 #' @examples
 #' ## get two pages of data from the post titled "Can Gastritis be cured?"
-#' scrape_one_post(url = "https://patient.info/forums/discuss/can-gastritis-be-cured--613999",
-#'                 From = 1, To = 2)
+#' post_url = "https://patient.info/forums/discuss/can-gastritis-be-cured--613999"
+#' scrape_one_post(url = post_url, From = 1, To = 2)
 #'
 #' @export
 scrape_one_post <- function(url, From = 1L, To = Inf) {
@@ -37,12 +37,12 @@ scrape_one_post <- function(url, From = 1L, To = Inf) {
     if (To < max(page_numbers)) {
       page_numbers <- page_numbers[page_numbers <= To]
     }
-    if (From < min(page_numbers)) {
-      page_numbers <- page_numbers[page_numbers <= From]
+    if (From > min(page_numbers)) {
+      page_numbers <- page_numbers[page_numbers >= From]
     }
     urls <- sprintf("%s?page=%s", url, page_numbers-1)
     page_list <- tryCatch(
-      lapply(urls[From:To], get_one_page),
+      lapply(urls, get_one_page),
       error = function(e) NULL
     )
     ## if null, wait 3 seconds
@@ -50,7 +50,7 @@ scrape_one_post <- function(url, From = 1L, To = Inf) {
       cat("first atempt failed. Trying again in 3 seconds...\n")
       Sys.sleep(3)
       page_list <- tryCatch(
-        lapply(urls[From:To], get_one_page),
+        lapply(urls, get_one_page),
         error = function(e) NULL
       )
       return(page_list)
@@ -73,8 +73,8 @@ scrape_one_post <- function(url, From = 1L, To = Inf) {
 #'
 #' @examples
 #' ## get the data of 100 random posts from the group "Abdominal Disorders"
-#' scrape_one_group(group_url = "https://patient.info/forums/discuss/browse/abdominal-disorders-3321",
-#'                  random_post_number = 100)
+#' group_url = "https://patient.info/forums/discuss/browse/abdominal-disorders-3321"
+#' scrape_one_group(group_url = group_url, random_post_number = 100)
 #'
 #' @export
 scrape_one_group <- function(group_url, random_post_number = NULL) {
