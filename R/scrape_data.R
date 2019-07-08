@@ -16,6 +16,8 @@
 #'
 #' @export
 scrape_one_post <- function(url, From = 1L, To = Inf) {
+  ## examine the validity of the input url
+  patient.info_url_post(url)
   page <- xml2::read_html(url)
   page_numbers <- get_page_numbers(page)
   if (length(page_numbers) == 0L) {
@@ -78,26 +80,158 @@ scrape_one_post <- function(url, From = 1L, To = Inf) {
 #'
 #' @export
 scrape_one_group <- function(group_url, random_post_number = NULL) {
+  ## examine the validity of the input url
+  patient.info_url_group(group_url)
   ## get all post urls in one topic group
   post_urls <- unlist(get_posts_urls(group_url))
   ## without random_post_number command
   if (is.null(random_post_number)) {
     group_data <- lapply(post_urls, scrape_one_post)
     df <- do.call("rbind", group_data)
-    df$group <- sub(".*/(.+)$", "\\1", group_url)
+    df$group <- sub(".*browse/(.+)-\\d+", "\\1", group_url)
     return(df)
   ## if random_post_number is larger than the total number of posts, just scrape all the posts
   } else if (random_post_number >= length(post_urls)) {
     group_data <- lapply(post_urls, scrape_one_post)
     df <- do.call("rbind", group_data)
-    df$group <- sub(".*/(.+)$", "\\1", group_url)
+    df$group <- sub(".*browse/(.+)-\\d+", "\\1", group_url)
     return(df)
   } else {
     post_urls_random <- base::sample(post_urls, random_post_number)
     group_data <- lapply(post_urls_random, scrape_one_post)
     df <- do.call("rbind", group_data)
-    df$group <- sub(".*/(.+)$", "\\1", group_url)
+    df$group <- sub(".*browse/(.+)-\\d+", "\\1", group_url)
     return(df)
   }
 }
+
+#' Scrape groups by initial letter
+#'
+#' Get posts and all the replies to the posts from groups by entering the initial letter of group names
+#'
+#' @param index The initial letter of groups. Could be one letter or a list of letters.
+#' @param post_number_per_group The number of random posts to scrape per group. Default is NULL, which means scrape the total number of posts in each group
+#'
+#' @return A data frame
+#'
+#' @examples
+#' ## Get the posts data of groups whose names starting with the letter "a" and "z"
+#' scrape_groups_by_initial_letter(index = c("x", "z"), post_number_per_group = 2)
+#'
+#' @export
+scrape_groups_by_initial_letter <- function(index, post_number_per_group = NULL) {
+  group_urls <- get_group_urls_by_initial_letter(index)[, 2]
+  df <- lapply(group_urls, scrape_one_group, random_post_number = post_number_per_group)
+  df <- do.call("rbind", df)
+  return(df)
+}
+
+
+#' Scrape groups by category
+#'
+#' Get posts and all the replies to the posts from groups of a category by entering category name of URL
+#'
+#' @param cat The category name (lower case, replace space with -) or category URL
+#' @param post_number_per_group The number of random posts to scrape per group. Default is NULL, which means scrape the total number of posts in each group
+#'
+#' @return A data frame
+#'
+#' @examples
+#' ## Get the posts data of groups whose names starting with the letter "a" and "z"
+#' scrape_groups_by_category(cat = "health-promotion", post_number_per_group = 2)
+#' cat_url = "https://patient.info/forums/categories/health-promotion-17"
+#' scrape_groups_by_category(cat = cat_url, post_number_per_group = 2)
+#'
+#' @export
+scrape_groups_by_category <- function(cat, post_number_per_group = NULL) {
+  stopifnot(is.character(cat))
+  cat_names <- get_category_urls()
+  if (grepl("^http", cat) && grepl("patient\\.info/forums/categories", cat)) {
+    group_urls <- get_group_urls_in_one_category(cat)
+    df <- lapply(group_urls, scrape_one_group, random_post_number = post_number_per_group)
+    df <- do.call("rbind", df)
+    return(df)
+  } else if (cat %in% cat_names$cat_names) {
+    cat_url <- cat_names[cat_names$cat_names == cat, 2]
+    group_urls <- get_group_urls_in_one_category(cat_url)
+    df <- lapply(group_urls, scrape_one_group, random_post_number = post_number_per_group)
+    df <- do.call("rbind", df)
+    return(df)
+  } else {
+    return("Input error: input should be a cateogry name or a category URL")
+  }
+}
+
+
+#' Count medical glossaries
+#'
+#' Count the number and ratio of medical glossaries used in the text.
+#'
+#' @param text Input data. Should be character vector or data frame with character
+#'   variable of interest named "text".
+#'
+#' @return A data frame containing the number of medical words, the number of total words,
+#'   and the ratio of medical words to total words.
+#'
+#' @examples
+#' ## create a character vector
+#' medical_text <- c(
+#' "I have to go in for core biopsy next week..Can anyone tell me the likely hood based on test results?",
+#' "No, it isn't possible to predict anything before the result of your biopsy is received.",
+#' "Thank you for the nice reply! Very thoughtful answer that did ease my fears!",
+#' "Can't help regards the meds.  Just want to give support.")
+#'
+#' ## get the medical glossaries counts from a character vector
+#' count_medical_terms(text = medical_text)
+#'
+#' creat a data frame with a character vector named "text"
+#' df <- data.frame(
+#'   id = c(1, 2, 3, 4),
+#'   text = c("I have to go in for core biopsy next week..Can anyone tell me the likely hood based on test results?",
+#'            "No, it isn't possible to predict anything before the result of your biopsy is received.",
+#'            "Thank you for the nice reply! Very thoughtful answer that did ease my fears!",
+#'            "Can't help regards the meds.  Just want to give support."),
+#'   stringsAsFactors = FALSE
+#' )
+#'
+#' ## get the medical glossaries counts from a data frame with "text" variable
+#' count_medical_terms(df)
+#'
+#' @details
+#' The medical glossary dictionary was got from https://github.com/glutanimate/wordlist-medicalterms-en
+#'
+#' @export
+count_medical_terms <- function(text) {
+  UseMethod("count_medical_terms")
+}
+
+count_medical_terms.character <- function(text) {
+  ## validate inputs
+  stopifnot(is.character(text))
+  med_dict <- read.csv("data/medical_words.csv")
+  med_dict <- med_dict[, 2:3]
+  med_words_count <- word_match(text, med_dict)
+  text <- data.frame(text = text, stringsAsFactors = FALSE)
+  cbind(text, med_words_count)
+}
+
+count_medical_terms.factor <- function(text) {
+  count_medical_terms(as.character(text))
+}
+
+count_medical_terms.data.frame <- function(text) {
+  ## validate input
+  stopifnot("text" %in% names(text))
+  count <- count_medical_terms(text$text)[, 2:4]
+  cbind(text, count)
+}
+
+count_medical_terms.list <- function(text) {
+  ## validate input
+  stopifnot(is.list(text))
+  text <- data.frame(text = unlist(text), stringsAsFactors = FALSE)
+  count_medical_terms.data.frame(text)
+}
+
+
 

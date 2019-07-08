@@ -4,14 +4,14 @@
 \alias{scrape_one_post}
 \title{Scrape one initial post}
 \usage{
-scrape_one_post(url, From = 1L, To = length(urls))
+scrape_one_post(url, From = 1L, To = Inf)
 }
 \arguments{
 \item{url}{URL to the post to scrape}
 
 \item{From}{The starting page number. Default is the first page}
 
-\item{To}{The ending page number. Default is the last page}
+\item{To}{The ending page number. Default (Inf) is the last page (so all pages)}
 }
 \value{
 A data frame
@@ -21,7 +21,7 @@ Get the data from one initial post by entering its url
 }
 \examples{
 ## get two pages of data from the post titled "Can Gastritis be cured?"
-scrape_one_post(url = "https://patient.info/forums/discuss/can-gastritis-be-cured--613999",
-                From = 1, To = 2)
+post_url = "https://patient.info/forums/discuss/can-gastritis-be-cured--613999"
+scrape_one_post(url = post_url, From = 1, To = 2)
 
 }

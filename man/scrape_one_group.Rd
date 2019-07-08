@@ -19,7 +19,7 @@ Get all the posts and all the replies to the posts from one group by entering it
 }
 \examples{
 ## get the data of 100 random posts from the group "Abdominal Disorders"
-scrape_one_group(group_url = "https://patient.info/forums/discuss/browse/abdominal-disorders-3321",
-                 random_post_number = 100)
+group_url = "https://patient.info/forums/discuss/browse/abdominal-disorders-3321"
+scrape_one_group(group_url = group_url, random_post_number = 100)
 
 }

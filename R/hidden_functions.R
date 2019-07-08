@@ -67,7 +67,7 @@ get_one_page <- function(url) {
                    likes = as.numeric(unlist(likes)),
                    replies = as.numeric(unlist(replies)),
                    text = text,
-                   stringAsFactors = FALSE)
+                   stringsAsFactors = FALSE)
   df$post_title <- post_title[1]
   return(df)
 }
@@ -103,4 +103,70 @@ get_posts_urls <- function(topic_url, n1=1, n2=length(topic_urls)) {
     post_urls <- lapply(post_urls, function (x) paste0("https://patient.info", x))
   }
   return(post_urls)
+}
+
+
+## get all groups urls in one index page
+get_group_urls_in_one_index_page <- function(index_url) {
+  group_urls <- xml2::read_html(index_url) %>% rvest::html_nodes(".row-0") %>%
+    rvest::html_nodes("a") %>% rvest::html_attr("href")
+  group_urls <- paste0("https://patient.info", group_urls)
+  return(group_urls)
+}
+
+## get all groups urls of one or more innitial letter
+get_group_urls_by_initial_letter <- function(index = letters) {
+  index_list <- paste0("https://patient.info/forums/index-", index)
+  group_urls <- lapply(index_list, get_group_urls_in_one_index_page)
+  group_urls <- unlist(group_urls)
+  group_names <- sub(".*browse/(.+)-\\d+", "\\1", group_urls)
+  groups <- data.frame(group_names = group_names,
+                       group_urls = group_urls,
+                       stringsAsFactors = FALSE)
+  return(groups)
+}
+
+## get all groups urls in one category
+get_group_urls_in_one_category <- function(cat_url) {
+  group_urls <- xml2::read_html(cat_url) %>% rvest::html_nodes(".title") %>%
+    rvest::html_nodes("a") %>% rvest::html_attr("href")
+  group_urls <- paste0("https://patient.info", group_urls)
+  cat_name <- sub(".*categories/(.+)-\\d+", "\\1", cat_url)
+  group_names <- sub(".*categories/(.+)-\\d+", "\\1", cat_url)
+  return(group_urls)
+}
+
+## get category urls
+get_category_urls <- function() {
+  cat_urls <- xml2::read_html("https://patient.info/forums") %>%
+    rvest::html_nodes(".con-meds-lnk") %>%
+    rvest::html_attr("href")
+  cat_urls <- paste0("https://patient.info", cat_urls)
+  cat_names <- sub(".*categories/(.+)-\\d+", "\\1", cat_urls)
+  categories <- data.frame(cat_names = cat_names,
+                       cat_urls = cat_urls,
+                       stringsAsFactors = FALSE)
+  return(categories)
+}
+
+## function to count words matches in a dictionary
+word_match <- function(x, dict) {
+  if (is.character(x)) {
+    ## this removes URLs
+    x <- gsub("https?://\\S+|@\\S+", "", x)
+    x <- tokenizers::tokenize_words(
+      x, lowercase = TRUE, strip_punct = TRUE, strip_numeric = FALSE
+    )
+  }
+  word_count <- function(token) {
+    total_words_count <- length(token)
+    med_words_count <- sum(dict$value[match(token, dict$word)], na.rm = TRUE)
+    med_words_ratio <- med_words_count/total_words_count
+    data.frame(total_words_count = total_words_count,
+               med_words_count = med_words_count,
+               med_words_ratio = med_words_ratio,
+               stringsAsFactors = FALSE)
+  }
+  count <- lapply(x, word_count)
+  count <- do.call("rbind", count)
 }
