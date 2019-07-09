@@ -235,7 +235,7 @@ count_medical_terms.list <- function(text) {
   ## validate input
   stopifnot(is.list(text))
   text <- data.frame(text = unlist(text), stringsAsFactors = FALSE)
-  count_medical_terms.data.frame(text)
+  count_medical_terms(text)
 }
 
 
