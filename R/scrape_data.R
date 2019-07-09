@@ -198,7 +198,12 @@ scrape_groups_by_category <- function(cat, post_number_per_group = NULL) {
 #' count_medical_terms(df)
 #'
 #' @details
-#' The medical glossary dictionary was got from https://github.com/glutanimate/wordlist-medicalterms-en
+#' The medical glossary dictionary was got from Aristotelis P. <https://github.com/glutanimate/wordlist-medicalterms-en>.
+#'   It is based on two prominent medical dictionary projects:
+#'   OpenMedSpel by R. Robinson of e-MedTools (Version 2.0.0, released 2014-01-21)
+#'   <http://www.e-medtools.com/openmedspel.html> and
+#'   MTH-Med-Spel-Chek by Rajasekharan N. of MT-Herald (released 2014-04-02)
+#'   <http://mtherald.com/free-medical-spell-checker-for-microsoft-word-custom-dictionary/>.
 #'
 #' @export
 count_medical_terms <- function(text) {
