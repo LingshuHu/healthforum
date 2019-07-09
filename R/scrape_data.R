@@ -210,6 +210,7 @@ count_medical_terms <- function(text) {
   UseMethod("count_medical_terms")
 }
 
+#' @export
 count_medical_terms.character <- function(text) {
   ## validate inputs
   stopifnot(is.character(text))
@@ -220,10 +221,12 @@ count_medical_terms.character <- function(text) {
   cbind(text, med_words_count)
 }
 
+#' @export
 count_medical_terms.factor <- function(text) {
   count_medical_terms(as.character(text))
 }
 
+#' @export
 count_medical_terms.data.frame <- function(text) {
   ## validate input
   stopifnot("text" %in% names(text))
@@ -231,12 +234,14 @@ count_medical_terms.data.frame <- function(text) {
   cbind(text, count)
 }
 
+#' @export
 count_medical_terms.list <- function(text) {
   ## validate input
   stopifnot(is.list(text))
   text <- data.frame(text = unlist(text), stringsAsFactors = FALSE)
   count_medical_terms(text)
 }
+
 
 
 
