@@ -214,9 +214,7 @@ count_medical_terms <- function(text) {
 count_medical_terms.character <- function(text) {
   ## validate inputs
   stopifnot(is.character(text))
-  med_dict <- read.csv("data/medical_words.csv")
-  med_dict <- med_dict[, 2:3]
-  med_words_count <- word_match(text, med_dict)
+  med_words_count <- word_match(text, medical_words)
   text <- data.frame(text = text, stringsAsFactors = FALSE)
   cbind(text, med_words_count)
 }

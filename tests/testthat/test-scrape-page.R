@@ -8,7 +8,7 @@ test_that("scrape_one_post works", {
   expect_error(
     scrape_one_post()
   )
-  expect_null(
+  expect_error(
     scrape_one_post("https://patient.info/doctor/bronchiolitis-pro", 1, 10)
   )
 })
