@@ -1,81 +1,89 @@
 
+### likes of post_root get all the likes of nested replies.
+## get_likes, get_reply_names, get_replies_and_type are the functions for get_one_page
+get_likes <- function(posts, post_action, post_count) {
+  if (post_action & post_count) {
+    likes <- rvest::html_node(posts, ".post__actions") %>%
+      rvest::html_node(".post__count") %>% rvest::html_text()
+  } else if (post_action & !post_count) {
+    likes <- 0L
+  } else {
+    likes <- NA
+  }
+}
+
+get_reply_names <- function(posts, author_recipient) {
+  if (author_recipient) {
+    reply_names <- rvest::html_node(posts, ".author__recipient") %>% rvest::html_text()
+  } else {
+    reply_names <- NA
+  }
+}
+
+get_replies_and_type <- function(posts, class_post_root, class_post) {
+  if (class_post_root) {
+    replies <- length(
+      gregexpr('<article class="post"', posts, fixed = TRUE)[[1]]
+      ) # count how many "<article class="post" are in a post
+    types <- "reply"
+  } else if (class_post) {
+    replies <- as.numeric(sub(".*\\s(\\d+)\\sreplies", "\\1",
+                                 rvest::html_text(
+                                   rvest::html_nodes(posts, ".post__stats")
+                                   )[2]
+                              )
+                          )
+    types <- "main_post"
+  } else {
+    replies <- 0L
+    types <- "nested_reply"
+  }
+  return(c(replies, types))
+}
+
 ## scrape data from the first page of one post
 get_one_page <- function(url) {
   page <- xml2::read_html(url)
   ## get all the posts
-  posts <- page %>%
-    rvest::html_nodes(".post")
-  posts_id <- posts %>%
-    rvest::html_attrs() %>%
-    purrr::map(2) %>% unlist()
-  ## main reply count
-  main_reply <- page %>%
-    rvest::html_nodes(".reply__title") %>%
-    rvest::html_text()
-  main_reply <- sub("(\\d+)\\s[A-z]+", "\\1", main_reply) %>% as.numeric()
+  posts <- rvest::html_nodes(page, ".post")
+  posts_id <- unlist(purrr::map(rvest::html_attrs(posts), 2))
   ## likes
-  likes <- vector("list", length(posts))
-  for (i in seq_along(posts)) {
-    if (grepl('post__actions', posts[i]) & grepl('post__count', posts[i])) {
-      likes[i] <- posts[i] %>% rvest::html_node(".post__actions") %>%
-        rvest::html_node(".post__count") %>% rvest::html_text()
-    } else if (grepl('post__actions', posts[i]) & !grepl('post__count', posts[i])) {
-      likes[i] <- 0L
-    } else {
-      likes[i] <- NA
-    }
-  }
+  post_action = grepl('post__actions', posts, fixed = TRUE)
+  post_count = grepl('post__count', posts, fixed = TRUE)
+  likes <- base::mapply(get_likes, posts, post_action, post_count) # get_likes is a function
   ## get user names
-  names <- page %>% rvest::html_nodes(".author__name") %>% rvest::html_text()
+  names <- rvest::html_text(rvest::html_nodes(page, ".author__name"))
   ## reply to names
-  reply_names <- vector("list", length(posts))
-  for (i in seq_along(posts)) {
-    if (grepl('author__recipient', posts[i])) {
-      reply_names[i] <- rvest::html_node(posts[i], ".author__recipient") %>% rvest::html_text()
-    } else {
-      reply_names[i] <- NA
-    }
-  }
+  author_recipient <- grepl('author__recipient', posts, fixed = TRUE)
+  reply_names <- base::mapply(get_reply_names, posts, author_recipient) # get_reply_names is a function
   ## date and time
-  post_time <- page %>%
-    rvest::html_nodes("time") %>%
-    rvest::html_attr("datetime") %>%
-    as.POSIXct(format = "%Y-%m-%dT%H:%M+%S:00")
+  post_time <- rvest::html_attr(rvest::html_nodes(page, "time"), "datetime")
   ## reply count and type
-  replies <- vector("list", length(posts))
-  types <- vector("list", length(posts))
-  for (i in seq_along(posts)) {
-    if (grepl('<article class=\"post post__root\"', posts[i])) {
-      replies[i] <- length(regmatches(posts[i], gregexpr('<article class="post"', posts[i]))[[1]])
-      types[i] <- "reply"
-    } else if (grepl('<article class=\"post mb-0"', posts[i])) {
-      replies[i] <- main_reply
-      types[i] <- "main_post"
-    } else {
-      replies[i] <- 0L
-      types[i] <- "nested_reply"
-    }
-  }
-  post_title <- posts %>% rvest::html_node(".post__title") %>% rvest::html_text(trim = TRUE)
-  text <- posts %>% rvest::html_nodes(".post__content") %>% rvest::html_text(trim = TRUE)
+  class_post_root <- grepl('<article class=\"post post__root\"', posts, fixed = TRUE)
+  class_post <- grepl('<article class=\"post mb-0"', posts, fixed = TRUE)
+  replies_and_type <- base::mapply(get_replies_and_type, posts, class_post_root, class_post)
+  ## post title and text
+  post_title <- rvest::html_text(rvest::html_node(posts, ".post__title"), trim = TRUE)
+  text <- rvest::html_text(rvest::html_nodes(posts, ".post__content"), trim = TRUE)
   ## combine to a dataframe
   df <- data.frame(posts_id = posts_id,
-                   post_time = as.POSIXct(post_time, origin = "1970-01-01"),
-                   types = unlist(types),
+                   post_time = post_time,
+                   types = as.character(replies_and_type[2, ]),
                    user_names = names,
-                   reply_names = unlist(reply_names),
-                   likes = as.numeric(unlist(likes)),
-                   replies = as.numeric(unlist(replies)),
+                   reply_names = reply_names,
+                   likes = as.numeric(likes),
+                   replies = as.numeric(replies_and_type[1, ]),
                    text = text,
-                   stringsAsFactors = FALSE)
+                   stringsAsFactors = FALSE,
+                   check.names = F, fix.empty.names = F)
   df$post_title <- post_title[1]
   return(df)
 }
 
+
 ## scrape the total page numbers
 get_page_numbers <- function(x) {
-  p <- x %>%
-    rvest::html_node(".reply__control.reply-pagination") %>%
+  p <- rvest::html_node(x, ".reply__control.reply-pagination") %>%
     rvest::html_text()
   m <- gregexpr("\\d+(?=/)", p, perl = TRUE)
   as.numeric(regmatches(p, m)[[1]])
@@ -93,7 +101,7 @@ get_posts_urls <- function(topic_url, n1=1, n2=length(topic_urls)) {
   topic_page <- xml2::read_html(topic_url)
   page_numbers<- get_page_numbers(topic_page)
   if (length(page_numbers) == 0L) {
-    post_urls <- topic_page %>% rvest::html_nodes(".post__title") %>% rvest::html_nodes("a") %>%
+    post_urls <- rvest::html_nodes(topic_page, ".post__title") %>% rvest::html_nodes("a") %>%
       rvest::html_attr("href")
     post_urls <- lapply(post_urls, function (x) paste0("https://patient.info", x))
   } else {
@@ -170,3 +178,5 @@ word_match <- function(x, dict) {
   count <- lapply(x, word_count)
   count <- do.call("rbind", count)
 }
+
+

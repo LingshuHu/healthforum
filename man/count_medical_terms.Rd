@@ -36,7 +36,7 @@ medical_text <- c(
 ## get the medical glossaries counts from a character vector
 count_medical_terms(text = medical_text)
 
-creat a data frame with a character vector named "text"
+## creat a data frame with a character vector named "text"
 df <- data.frame(
   id = c(1, 2, 3, 4),
   text = c("I have to go in for core biopsy next week..Can anyone tell me the likely hood based on test results?",

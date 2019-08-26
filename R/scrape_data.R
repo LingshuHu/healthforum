@@ -6,6 +6,7 @@
 #' @param url URL to the post to scrape
 #' @param From The starting page number. Default is the first page
 #' @param To The ending page number. Default (Inf) is the last page (so all pages)
+#' @param get_user_info Get users' profile information. It includes the date of joining the forum and the total posts they have sent. The default is TRUE.
 #'
 #' @return A data frame
 #'
@@ -15,14 +16,14 @@
 #' scrape_one_post(url = post_url, From = 1, To = 2)
 #'
 #' @export
-scrape_one_post <- function(url, From = 1L, To = Inf) {
+scrape_one_post <- function(url, From = 1L, To = Inf, get_user_info = TRUE) {
   ## examine the validity of the input url
   patient.info_url_post(url)
   page <- xml2::read_html(url)
   page_numbers <- get_page_numbers(page)
   if (length(page_numbers) == 0L) {
     df <- tryCatch(
-      get_one_page(url),
+      get_one_page(url, get_user_info),
       error = function(e) NULL
       )
     ## if null, wait 3 seconds
@@ -44,7 +45,7 @@ scrape_one_post <- function(url, From = 1L, To = Inf) {
     }
     urls <- sprintf("%s?page=%s", url, page_numbers-1)
     page_list <- tryCatch(
-      lapply(urls, get_one_page),
+      lapply(urls, function(x) get_one_page(x, get_user_info)),
       error = function(e) NULL
     )
     ## if null, wait 3 seconds
@@ -52,7 +53,7 @@ scrape_one_post <- function(url, From = 1L, To = Inf) {
       cat("first atempt failed. Trying again in 3 seconds...\n")
       Sys.sleep(3)
       page_list <- tryCatch(
-        lapply(urls, get_one_page),
+        lapply(urls, function(x) get_one_page(x, get_user_info)),
         error = function(e) NULL
       )
       return(page_list)
@@ -79,7 +80,7 @@ scrape_one_post <- function(url, From = 1L, To = Inf) {
 #' scrape_one_group(group_url = group_url, random_post_number = 100)
 #'
 #' @export
-scrape_one_group <- function(group_url, random_post_number = NULL) {
+scrape_one_group <- function(group_url, random_post_number = NULL, ...) {
   ## examine the validity of the input url
   patient.info_url_group(group_url)
   ## get all post urls in one topic group
@@ -119,7 +120,7 @@ scrape_one_group <- function(group_url, random_post_number = NULL) {
 #' scrape_groups_by_initial_letter(index = c("x", "z"), post_number_per_group = 2)
 #'
 #' @export
-scrape_groups_by_initial_letter <- function(index, post_number_per_group = NULL) {
+scrape_groups_by_initial_letter <- function(index, post_number_per_group = NULL, ...) {
   group_urls <- get_group_urls_by_initial_letter(index)[, 2]
   df <- lapply(group_urls, scrape_one_group, random_post_number = post_number_per_group)
   df <- do.call("rbind", df)
@@ -143,7 +144,7 @@ scrape_groups_by_initial_letter <- function(index, post_number_per_group = NULL)
 #' scrape_groups_by_category(cat = cat_url, post_number_per_group = 2)
 #'
 #' @export
-scrape_groups_by_category <- function(cat, post_number_per_group = NULL) {
+scrape_groups_by_category <- function(cat, post_number_per_group = NULL, ...) {
   stopifnot(is.character(cat))
   cat_names <- get_category_urls()
   if (grepl("^http", cat) && grepl("patient\\.info/forums/categories", cat)) {
@@ -162,6 +163,23 @@ scrape_groups_by_category <- function(cat, post_number_per_group = NULL) {
   }
 }
 
+
+#' Scrape a user's posts
+#'
+#' Get all posts/replies one user has sent by his/her user name
+#'
+#' @param cat The category name (lower case, replace space with -) or category URL
+#' @param post_number_per_group The number of random posts to scrape per group. Default is NULL, which means scrape the total number of posts in each group
+#'
+#' @return A data frame
+#'
+#' @examples
+
+#'
+#' @export
+scrape_user_posts <- function() {
+
+}
 
 #' Count medical glossaries
 #'
@@ -184,7 +202,7 @@ scrape_groups_by_category <- function(cat, post_number_per_group = NULL) {
 #' ## get the medical glossaries counts from a character vector
 #' count_medical_terms(text = medical_text)
 #'
-#' creat a data frame with a character vector named "text"
+#' ## creat a data frame with a character vector named "text"
 #' df <- data.frame(
 #'   id = c(1, 2, 3, 4),
 #'   text = c("I have to go in for core biopsy next week..Can anyone tell me the likely hood based on test results?",
@@ -204,6 +222,7 @@ scrape_groups_by_category <- function(cat, post_number_per_group = NULL) {
 #'   <http://www.e-medtools.com/openmedspel.html> and
 #'   MTH-Med-Spel-Chek by Rajasekharan N. of MT-Herald (released 2014-04-02)
 #'   <http://mtherald.com/free-medical-spell-checker-for-microsoft-word-custom-dictionary/>.
+#'
 #'
 #' @export
 count_medical_terms <- function(text) {
