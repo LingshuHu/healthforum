@@ -13,7 +13,8 @@ Imports:
     magrittr,
     xml2,
     purrr,
-    tokenizers
+    tokenizers,
+    stringr
 Depends: R (>= 2.10)
 RoxygenNote: 6.1.1
 Suggests: 
