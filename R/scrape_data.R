@@ -185,14 +185,14 @@ scrape_user_posts <- function(user_profile_url, type = c("both", "replies", "top
     return(df_user_reply)
   }
 
-  else if (type == "topic_post") {
+  if (type == "topic_post") {
     tp_urls <- get_tp_urls(user_profile_url)
     df_user_tpost <- lapply(tp_urls, get_user_topic_post)
     df_user_tpost <- do.call("rbind", df_user_tpost)
     return(df_user_tpost[, 7:13])
   }
 
-  else {
+  if (type == "both") {
     re_urls <- get_re_urls(user_profile_url)
     df_user_reply <- lapply(re_urls, get_user_reply)
     df_user_reply <- do.call("rbind", df_user_reply)
@@ -206,7 +206,9 @@ scrape_user_posts <- function(user_profile_url, type = c("both", "replies", "top
   }
 }
 
-df_user_posts <- scrape_user_posts("https://patient.info/forums/profiles/utgh4k33-1264038")
+
+
+df_user_posts <- scrape_user_posts("https://patient.info/forums/profiles/utgh4k33-1264038", "both")
 
 #' Count medical glossaries
 #'
