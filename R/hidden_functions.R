@@ -54,10 +54,22 @@ get_users_information <- function(user_profile_url) {
   join_date <- sub("Joined ", "", date_posts[1], fixed = TRUE) %>%
     as.POSIXct(tryFormats = "%d-%m-%Y")
   posts_num <- as.numeric(sub(" posts", "", date_posts[2], fixed = TRUE))
-  user_profile <- data.frame(join_date = join_date, posts_num = posts_num,
+  profile_text <- rvest::html_node(profile_page, ".my-profile__row__summary") %>%
+    rvest::html_text(trim = TRUE)
+  group_names <- rvest::html_nodes(profile_page, ".groups-row") %>%
+    rvest::html_text(trim = TRUE)
+  group_names <- unlist(strsplit(group_names, "\r\n")) %>%
+    stringr::str_trim(side = "both")
+
+  user_profile <- data.frame(join_date = join_date,
+                             posts_num = posts_num,
+                             profile_text = profile_text,
+                             group_names = paste(group_names, collapse = ", "),
                              stringsAsFactors = FALSE)
   return(user_profile)
 }
+
+df2 <- get_users_information("https://patient.info/forums/profiles/jean83358-1175490")
 
 ## scrape data from the first page of one post
 get_one_page <- function(url, get_user_info = TRUE) {
@@ -125,6 +137,7 @@ get_one_page <- function(url, get_user_info = TRUE) {
     }
 }
 
+df3 <- get_one_page(url)
 
 ## scrape the total page numbers
 get_page_numbers <- function(x) {
@@ -279,24 +292,81 @@ get_user_reply <- function(re_url) {
   return(df_user_reply)
 }
 
-## get a user's all reply urls (re_urls)
+## get a user's recent reply urls (re_urls)
 get_re_urls <- function(user_profile_url) {
   replies_list_url <- paste0(user_profile_url, "/replies")
-  following_list_url <- paste0(user_profile_url, "/discussions/following")
+  #following_list_url <- paste0(user_profile_url, "/discussions/following")
 
   page1 <- xml2::read_html(replies_list_url)
-  page2 <- xml2::read_html(following_list_url)
+  #page2 <- xml2::read_html(following_list_url)
 
   re_urls <- rvest::html_nodes(page1, ".recent-list") %>%
     rvest::html_nodes("a") %>% rvest::html_attr("href")
   re_urls <- re_urls[grepl(".*discuss.*", re_urls)]
 
-  re_urls2 <- rvest::html_nodes(page2, "h3") %>%
-    rvest::html_nodes("a") %>% rvest::html_attr("href")
-
+  #re_urls2 <- rvest::html_nodes(page2, "h3") %>%
+  #  rvest::html_nodes("a") %>% rvest::html_attr("href")
+  return(re_urls)
 }
 
 
+## get a user's topic posts information
+get_user_topic_post <- function(tp_url) {
+  page <- xml2::read_html(tp_url)
+
+  ## post type
+  type <- "main_post"
+
+  ## get topic post content
+  topic_post <- rvest::html_node(page, ".post__main")
+
+  ## topic post title
+  topic_title <- rvest::html_text(rvest::html_node(page, ".post__title"), trim = TRUE)
+
+  ## topic post author
+  topic_author <- rvest::html_node(topic_post, ".author__name") %>% rvest::html_text()
+
+  ## topic post time
+  topic_post_time <- rvest::html_attr(rvest::html_node(topic_post, "time"), "datetime")
+  topic_post_time <- gsub("T|\\+00", " ", topic_post_time) %>%
+    as.POSIXct(tryFormats = "%Y-%m-%d %H:%M")
+
+  ## number of topic post likes and replies
+  topic_post_content <- rvest::html_node(topic_post, ".post__content") %>%
+    rvest::html_nodes("p") %>% rvest::html_text(trim = TRUE)
+  topic_post_likes <- sub("(\\d+)\\slikes.*", "\\1", tail(topic_post_content, n = 1))
+  topic_post_replies <- sub(".*(\\d+)\\sreplies", "\\1", tail(topic_post_content, n = 1))
+
+  ## topic post text
+  topic_post_text <- paste(head(topic_post_content, -1), sep = ' ', collapse = ' ')
+
+  df_user_tpost <- data.frame(user = topic_author,
+                              reply_name = NA,
+                              time = NA,
+                              likes = NA,
+                              replies = NA,
+                              text = NA,
+                              type = type,
+                              topic_title = topic_title,
+                              topic_author = topic_author,
+                              topic_post_time = topic_post_time,
+                              topic_post_likes = topic_post_likes,
+                              topic_post_replies = topic_post_replies,
+                              topic_post_text = topic_post_text,
+                              stringsAsFactors = FALSE)
+  return(df_user_tpost)
+}
+
+df_user_tpost <- get_user_topic_post("https://patient.info/forums/discuss/blood-tests-711648")
+
+## get a user's recent topic post urls (re_urls)
+get_tp_urls <- function(user_profile_url) {
+  tp_list_url <- paste0(user_profile_url, "/discussions/startedbyme")
+  page <- xml2::read_html(tp_list_url)
+  tp_urls <- rvest::html_nodes(page, "h3") %>%
+    rvest::html_node("a") %>% rvest::html_attr("href")
+  return(tp_urls)
+}
 
 ## function to count words matches in a dictionary
 word_match <- function(x, dict) {

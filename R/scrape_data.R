@@ -177,9 +177,36 @@ scrape_groups_by_category <- function(cat, post_number_per_group = NULL, ...) {
 
 #'
 #' @export
-scrape_user_posts <- function() {
+scrape_user_posts <- function(user_profile_url, type = c("both", "replies", "topic_post")) {
+  if (type == "replies") {
+    re_urls <- get_re_urls(user_profile_url)
+    df_user_reply <- lapply(re_urls, get_user_reply)
+    df_user_reply <- do.call("rbind", df_user_reply)
+    return(df_user_reply)
+  }
 
+  else if (type == "topic_post") {
+    tp_urls <- get_tp_urls(user_profile_url)
+    df_user_tpost <- lapply(tp_urls, get_user_topic_post)
+    df_user_tpost <- do.call("rbind", df_user_tpost)
+    return(df_user_tpost[, 7:13])
+  }
+
+  else {
+    re_urls <- get_re_urls(user_profile_url)
+    df_user_reply <- lapply(re_urls, get_user_reply)
+    df_user_reply <- do.call("rbind", df_user_reply)
+
+    tp_urls <- get_tp_urls(user_profile_url)
+    df_user_tpost <- lapply(tp_urls, get_user_topic_post)
+    df_user_tpost <- do.call("rbind", df_user_tpost)
+
+    df_user_posts <- rbind(df_user_reply, df_user_tpost)
+    return(df_user_posts)
+  }
 }
+
+df_user_posts <- scrape_user_posts("https://patient.info/forums/profiles/utgh4k33-1264038")
 
 #' Count medical glossaries
 #'
