@@ -168,13 +168,14 @@ scrape_groups_by_category <- function(cat, post_number_per_group = NULL, ...) {
 #'
 #' Get all posts/replies one user has sent by his/her user name
 #'
-#' @param cat The category name (lower case, replace space with -) or category URL
-#' @param post_number_per_group The number of random posts to scrape per group. Default is NULL, which means scrape the total number of posts in each group
+#' @param user_profile_url The URL of a user's profile page. Multiple users use c(url1, url2, ...)
+#' @param type Choose a type of posts to be scraped. It includes "replies", i.e., a user's replies to others' posts, or "topic_post", i.e., a user's initial posts. The default is to get "both"
 #'
 #' @return A data frame
 #'
 #' @examples
-
+#' user_profile_url <- "https://patient.info/forums/profiles/utgh4k33-1264038"
+#' scrape_user_posts(user_profile_url = user_profile_url, type = "both")
 #'
 #' @export
 scrape_user_posts <- function(user_profile_url, type = c("both", "replies", "topic_post")) {
@@ -206,9 +207,9 @@ scrape_user_posts <- function(user_profile_url, type = c("both", "replies", "top
   }
 }
 
+rm(df_user_posts)
 
-
-df_user_posts <- scrape_user_posts("https://patient.info/forums/profiles/utgh4k33-1264038", "both")
+df_user_posts <- scrape_user_posts("https://patient.info/forums/profiles/utgh4k33-1264038")
 
 #' Count medical glossaries
 #'
