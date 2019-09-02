@@ -67,20 +67,20 @@ scrape_one_post <- function(url, From = 1L, To = Inf, get_user_info = TRUE) {
 
 #' Scrape one group
 #'
-#' Get all the posts and all the replies to the posts from one group by entering its url
+#' Get all the posts containing all the replies to those posts from one group by entering its url
 #'
 #' @param group_url URL to the page to scrape
 #' @param random_post_number The number of random posts to scrape. Default is NULL, which means scrape the total number of posts
-#'
+#' @param random_seed A random number used to set the random seed to reproduce the work
 #' @return A data frame
 #'
 #' @examples
-#' ## get the data of 100 random posts from the group "Abdominal Disorders"
+#' ## get the data of 10 random posts from the group "Abdominal Disorders"
 #' group_url = "https://patient.info/forums/discuss/browse/abdominal-disorders-3321"
-#' scrape_one_group(group_url = group_url, random_post_number = 100)
+#' scrape_one_group(group_url = group_url, random_post_number = 10)
 #'
 #' @export
-scrape_one_group <- function(group_url, random_post_number = NULL, ...) {
+scrape_one_group <- function(group_url, random_post_number = NULL, random_seed = NULL, ...) {
   ## examine the validity of the input url
   patient.info_url_group(group_url)
   ## get all post urls in one topic group
@@ -98,11 +98,20 @@ scrape_one_group <- function(group_url, random_post_number = NULL, ...) {
     df$group <- sub(".*browse/(.+)-\\d+", "\\1", group_url)
     return(df)
   } else {
-    post_urls_random <- base::sample(post_urls, random_post_number)
-    group_data <- lapply(post_urls_random, scrape_one_post)
-    df <- do.call("rbind", group_data)
-    df$group <- sub(".*browse/(.+)-\\d+", "\\1", group_url)
-    return(df)
+    if (!is.null(random_seed)) {
+      set.seed(random_seed)
+      post_urls_random <- base::sample(post_urls, random_post_number, replace = FALSE)
+      group_data <- lapply(post_urls_random, scrape_one_post)
+      df <- do.call("rbind", group_data)
+      df$group <- sub(".*browse/(.+)-\\d+", "\\1", group_url)
+      return(df)
+    } else {
+      post_urls_random <- base::sample(post_urls, random_post_number, replace = FALSE)
+      group_data <- lapply(post_urls_random, scrape_one_post)
+      df <- do.call("rbind", group_data)
+      df$group <- sub(".*browse/(.+)-\\d+", "\\1", group_url)
+      return(df)
+    }
   }
 }
 
@@ -117,7 +126,7 @@ scrape_one_group <- function(group_url, random_post_number = NULL, ...) {
 #'
 #' @examples
 #' ## Get the posts data of groups whose names starting with the letter "a" and "z"
-#' scrape_groups_by_initial_letter(index = c("x", "z"), post_number_per_group = 2)
+#' scrape_groups_by_initial_letter(index = c("x", "z"), post_number_per_group = 1)
 #'
 #' @export
 scrape_groups_by_initial_letter <- function(index, post_number_per_group = NULL, ...) {
@@ -139,9 +148,9 @@ scrape_groups_by_initial_letter <- function(index, post_number_per_group = NULL,
 #'
 #' @examples
 #' ## Get the posts data of groups whose names starting with the letter "a" and "z"
-#' scrape_groups_by_category(cat = "health-promotion", post_number_per_group = 2)
+#' scrape_groups_by_category(cat = "health-promotion", post_number_per_group = 1)
 #' cat_url = "https://patient.info/forums/categories/health-promotion-17"
-#' scrape_groups_by_category(cat = cat_url, post_number_per_group = 2)
+#' scrape_groups_by_category(cat = cat_url, post_number_per_group = 1)
 #'
 #' @export
 scrape_groups_by_category <- function(cat, post_number_per_group = NULL, ...) {
@@ -207,9 +216,6 @@ scrape_user_posts <- function(user_profile_url, type = c("both", "replies", "top
   }
 }
 
-rm(df_user_posts)
-
-df_user_posts <- scrape_user_posts("https://patient.info/forums/profiles/utgh4k33-1264038")
 
 #' Count medical glossaries
 #'
@@ -246,7 +252,7 @@ df_user_posts <- scrape_user_posts("https://patient.info/forums/profiles/utgh4k3
 #' count_medical_terms(df)
 #'
 #' @details
-#' The medical glossary dictionary was got from Aristotelis P. <https://github.com/glutanimate/wordlist-medicalterms-en>.
+#' The medical glossary dictionary was obtained from Aristotelis P. <https://github.com/glutanimate/wordlist-medicalterms-en>.
 #'   It is based on two prominent medical dictionary projects:
 #'   OpenMedSpel by R. Robinson of e-MedTools (Version 2.0.0, released 2014-01-21)
 #'   <http://www.e-medtools.com/openmedspel.html> and

@@ -4,7 +4,7 @@
 \alias{scrape_groups_by_initial_letter}
 \title{Scrape groups by initial letter}
 \usage{
-scrape_groups_by_initial_letter(index, post_number_per_group = NULL)
+scrape_groups_by_initial_letter(index, post_number_per_group = NULL, ...)
 }
 \arguments{
 \item{index}{The initial letter of groups. Could be one letter or a list of letters.}
@@ -19,6 +19,6 @@ Get posts and all the replies to the posts from groups by entering the initial l
 }
 \examples{
 ## Get the posts data of groups whose names starting with the letter "a" and "z"
-scrape_groups_by_initial_letter(index = c("x", "z"), post_number_per_group = 2)
+scrape_groups_by_initial_letter(index = c("x", "z"), post_number_per_group = 1)
 
 }

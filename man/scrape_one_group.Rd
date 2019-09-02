@@ -4,22 +4,25 @@
 \alias{scrape_one_group}
 \title{Scrape one group}
 \usage{
-scrape_one_group(group_url, random_post_number = NULL)
+scrape_one_group(group_url, random_post_number = NULL,
+  random_seed = NULL, ...)
 }
 \arguments{
 \item{group_url}{URL to the page to scrape}
 
 \item{random_post_number}{The number of random posts to scrape. Default is NULL, which means scrape the total number of posts}
+
+\item{random_seed}{A random number used to set the random seed to reproduce the work}
 }
 \value{
 A data frame
 }
 \description{
-Get all the posts and all the replies to the posts from one group by entering its url
+Get all the posts containing all the replies to those posts from one group by entering its url
 }
 \examples{
-## get the data of 100 random posts from the group "Abdominal Disorders"
+## get the data of 10 random posts from the group "Abdominal Disorders"
 group_url = "https://patient.info/forums/discuss/browse/abdominal-disorders-3321"
-scrape_one_group(group_url = group_url, random_post_number = 100)
+scrape_one_group(group_url = group_url, random_post_number = 10)
 
 }

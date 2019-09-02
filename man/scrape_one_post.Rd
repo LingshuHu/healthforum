@@ -4,7 +4,7 @@
 \alias{scrape_one_post}
 \title{Scrape one initial post}
 \usage{
-scrape_one_post(url, From = 1L, To = Inf)
+scrape_one_post(url, From = 1L, To = Inf, get_user_info = TRUE)
 }
 \arguments{
 \item{url}{URL to the post to scrape}
@@ -12,6 +12,8 @@ scrape_one_post(url, From = 1L, To = Inf)
 \item{From}{The starting page number. Default is the first page}
 
 \item{To}{The ending page number. Default (Inf) is the last page (so all pages)}
+
+\item{get_user_info}{Get users' profile information. It includes the date of joining the forum and the total posts they have sent. The default is TRUE.}
 }
 \value{
 A data frame

@@ -69,7 +69,7 @@ get_users_information <- function(user_profile_url) {
   return(user_profile)
 }
 
-df2 <- get_users_information("https://patient.info/forums/profiles/jean83358-1175490")
+
 
 ## scrape data from the first page of one post
 get_one_page <- function(url, get_user_info = TRUE) {
@@ -137,7 +137,6 @@ get_one_page <- function(url, get_user_info = TRUE) {
     }
 }
 
-df3 <- get_one_page(url)
 
 ## scrape the total page numbers
 get_page_numbers <- function(x) {
@@ -310,7 +309,6 @@ get_re_urls <- function(user_profile_url) {
   return(re_urls)
 }
 
-get_re_urls("https://patient.info/forums/profiles/utgh4k33-1264038")
 
 
 
@@ -361,7 +359,7 @@ get_user_topic_post <- function(tp_url) {
   return(df_user_tpost)
 }
 
-df_user_tpost <- get_user_topic_post("https://patient.info/forums/discuss/blood-tests-711648")
+
 
 ## get a user's recent topic post urls (re_urls)
 get_tp_urls <- function(user_profile_url) {
