@@ -10,6 +10,8 @@ scrape_groups_by_initial_letter(index, post_number_per_group = NULL, ...)
 \item{index}{The initial letter of groups. Could be one letter or a list of letters.}
 
 \item{post_number_per_group}{The number of random posts to scrape per group. Default is NULL, which means scrape the total number of posts in each group}
+
+\item{...}{optional arguments to FUN.}
 }
 \value{
 A data frame

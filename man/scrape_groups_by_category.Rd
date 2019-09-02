@@ -10,6 +10,8 @@ scrape_groups_by_category(cat, post_number_per_group = NULL, ...)
 \item{cat}{The category name (lower case, replace space with -) or category URL}
 
 \item{post_number_per_group}{The number of random posts to scrape per group. Default is NULL, which means scrape the total number of posts in each group}
+
+\item{...}{optional arguments to FUN.}
 }
 \value{
 A data frame

@@ -18,7 +18,8 @@ A data frame containing the number of medical words, the number of total words,
 Count the number and ratio of medical glossaries used in the text.
 }
 \details{
-The medical glossary dictionary was obtained from Aristotelis P. <https://github.com/glutanimate/wordlist-medicalterms-en>.
+The medical glossary dictionary was obtained from Aristotelis P.
+  <https://github.com/glutanimate/wordlist-medicalterms-en>.
   It is based on two prominent medical dictionary projects:
   OpenMedSpel by R. Robinson of e-MedTools (Version 2.0.0, released 2014-01-21)
   <http://www.e-medtools.com/openmedspel.html> and
@@ -39,9 +40,12 @@ count_medical_terms(text = medical_text)
 ## creat a data frame with a character vector named "text"
 df <- data.frame(
   id = c(1, 2, 3, 4),
-  text = c("I have to go in for core biopsy next week..Can anyone tell me the likely hood based on test results?",
-           "No, it isn't possible to predict anything before the result of your biopsy is received.",
-           "Thank you for the nice reply! Very thoughtful answer that did ease my fears!",
+  text = c("I have to go in for core biopsy next week..
+            Can anyone tell me the likely hood based on test results?",
+           "No, it isn't possible to predict anything before the result
+            of your biopsy is received.",
+           "Thank you for the nice reply! Very thoughtful answer that
+            did ease my fears!",
            "Can't help regards the meds.  Just want to give support."),
   stringsAsFactors = FALSE
 )

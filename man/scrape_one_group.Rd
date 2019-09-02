@@ -8,17 +8,19 @@ scrape_one_group(group_url, random_post_number = NULL,
   random_seed = NULL, ...)
 }
 \arguments{
-\item{group_url}{URL to the page to scrape}
+\item{group_url}{URL to the page to scrape.}
 
-\item{random_post_number}{The number of random posts to scrape. Default is NULL, which means scrape the total number of posts}
+\item{random_post_number}{The number of random posts to scrape. Default is NULL, which means scrape the total number of posts.}
 
-\item{random_seed}{A random number used to set the random seed to reproduce the work}
+\item{random_seed}{A random number used to set the random seed to reproduce the work.}
+
+\item{...}{optional arguments to FUN.}
 }
 \value{
 A data frame
 }
 \description{
-Get all the posts containing all the replies to those posts from one group by entering its url
+Get all the posts containing all the replies to those posts from one group by entering its url.
 }
 \examples{
 ## get the data of 10 random posts from the group "Abdominal Disorders"
