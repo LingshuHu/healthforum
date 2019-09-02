@@ -67,11 +67,13 @@ scrape_one_post <- function(url, From = 1L, To = Inf, get_user_info = TRUE) {
 
 #' Scrape one group
 #'
-#' Get all the posts containing all the replies to those posts from one group by entering its url
+#' Get all the posts containing all the replies to those posts from one group by entering its url.
 #'
-#' @param group_url URL to the page to scrape
-#' @param random_post_number The number of random posts to scrape. Default is NULL, which means scrape the total number of posts
-#' @param random_seed A random number used to set the random seed to reproduce the work
+#' @param group_url URL to the page to scrape.
+#' @param random_post_number The number of random posts to scrape. Default is NULL, which means scrape the total number of posts.
+#' @param random_seed A random number used to set the random seed to reproduce the work.
+#' @param ... optional arguments to FUN.
+#'
 #' @return A data frame
 #'
 #' @examples
@@ -121,6 +123,7 @@ scrape_one_group <- function(group_url, random_post_number = NULL, random_seed =
 #'
 #' @param index The initial letter of groups. Could be one letter or a list of letters.
 #' @param post_number_per_group The number of random posts to scrape per group. Default is NULL, which means scrape the total number of posts in each group
+#' @param ... optional arguments to FUN.
 #'
 #' @return A data frame
 #'
@@ -143,6 +146,7 @@ scrape_groups_by_initial_letter <- function(index, post_number_per_group = NULL,
 #'
 #' @param cat The category name (lower case, replace space with -) or category URL
 #' @param post_number_per_group The number of random posts to scrape per group. Default is NULL, which means scrape the total number of posts in each group
+#' @param ... optional arguments to FUN.
 #'
 #' @return A data frame
 #'
@@ -241,9 +245,12 @@ scrape_user_posts <- function(user_profile_url, type = c("both", "replies", "top
 #' ## creat a data frame with a character vector named "text"
 #' df <- data.frame(
 #'   id = c(1, 2, 3, 4),
-#'   text = c("I have to go in for core biopsy next week..Can anyone tell me the likely hood based on test results?",
-#'            "No, it isn't possible to predict anything before the result of your biopsy is received.",
-#'            "Thank you for the nice reply! Very thoughtful answer that did ease my fears!",
+#'   text = c("I have to go in for core biopsy next week..
+#'             Can anyone tell me the likely hood based on test results?",
+#'            "No, it isn't possible to predict anything before the result
+#'             of your biopsy is received.",
+#'            "Thank you for the nice reply! Very thoughtful answer that
+#'             did ease my fears!",
 #'            "Can't help regards the meds.  Just want to give support."),
 #'   stringsAsFactors = FALSE
 #' )
@@ -252,7 +259,8 @@ scrape_user_posts <- function(user_profile_url, type = c("both", "replies", "top
 #' count_medical_terms(df)
 #'
 #' @details
-#' The medical glossary dictionary was obtained from Aristotelis P. <https://github.com/glutanimate/wordlist-medicalterms-en>.
+#' The medical glossary dictionary was obtained from Aristotelis P.
+#'   <https://github.com/glutanimate/wordlist-medicalterms-en>.
 #'   It is based on two prominent medical dictionary projects:
 #'   OpenMedSpel by R. Robinson of e-MedTools (Version 2.0.0, released 2014-01-21)
 #'   <http://www.e-medtools.com/openmedspel.html> and

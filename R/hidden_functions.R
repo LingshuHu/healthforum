@@ -252,11 +252,11 @@ get_user_reply <- function(re_url) {
   ## number of topic post likes and replies
   topic_post_content <- rvest::html_node(topic_post, ".post__content") %>%
     rvest::html_nodes("p") %>% rvest::html_text(trim = TRUE)
-  topic_post_likes <- sub("^(\\d+)\\slikes.*", "\\1", tail(topic_post_content, n = 1))
-  topic_post_replies <- sub(".*\\s(\\d+)\\sreplies", "\\1", tail(topic_post_content, n = 1))
+  topic_post_likes <- sub("^(\\d+)\\slikes.*", "\\1", utils::tail(topic_post_content, n = 1))
+  topic_post_replies <- sub(".*\\s(\\d+)\\sreplies", "\\1", utils::tail(topic_post_content, n = 1))
 
   ## topic post text
-  topic_post_text <- paste(head(topic_post_content, -1), sep = ' ', collapse = ' ')
+  topic_post_text <- paste(utils::head(topic_post_content, -1), sep = ' ', collapse = ' ')
 
   ## number of likes of the reply post
   post_action = grepl('post__actions', this_user, fixed = TRUE)
@@ -336,11 +336,11 @@ get_user_topic_post <- function(tp_url) {
   ## number of topic post likes and replies
   topic_post_content <- rvest::html_node(topic_post, ".post__content") %>%
     rvest::html_nodes("p") %>% rvest::html_text(trim = TRUE)
-  topic_post_likes <- sub("^(\\d+)\\slikes.*", "\\1", tail(topic_post_content, n = 1))
-  topic_post_replies <- sub(".*\\s(\\d+)\\sreplies", "\\1", tail(topic_post_content, n = 1))
+  topic_post_likes <- sub("^(\\d+)\\slikes.*", "\\1", utils::tail(topic_post_content, n = 1))
+  topic_post_replies <- sub(".*\\s(\\d+)\\sreplies", "\\1", utils::tail(topic_post_content, n = 1))
 
   ## topic post text
-  topic_post_text <- paste(head(topic_post_content, -1), sep = ' ', collapse = ' ')
+  topic_post_text <- paste(utils::head(topic_post_content, -1), sep = ' ', collapse = ' ')
 
   df_user_tpost <- data.frame(user = topic_author,
                               reply_name = NA,
