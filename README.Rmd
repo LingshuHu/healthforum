@@ -5,6 +5,7 @@ output: github_document
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r, include = FALSE}
+options(width = 90)
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -52,9 +53,9 @@ gas <- scrape_one_post(
   From = 1, To = 2)
 ```
 
-View the returned data
+Preview the returned data frame
 
 ```{r}
-gas
+tibble::as_tibble(gas)
 ```
 
