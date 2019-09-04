@@ -11,9 +11,11 @@
 #' @return A data frame
 #'
 #' @examples
+#' \dontrun{
 #' ## get two pages of data from the post titled "Can Gastritis be cured?"
 #' post_url = "https://patient.info/forums/discuss/can-gastritis-be-cured--613999"
 #' scrape_one_post(url = post_url, From = 1, To = 2)
+#' }
 #'
 #' @export
 scrape_one_post <- function(url, From = 1L, To = Inf, get_user_info = TRUE) {
@@ -77,9 +79,11 @@ scrape_one_post <- function(url, From = 1L, To = Inf, get_user_info = TRUE) {
 #' @return A data frame
 #'
 #' @examples
-#' ## get the data of 10 random posts from the group "Abdominal Disorders"
-#' group_url = "https://patient.info/forums/discuss/browse/abdominal-disorders-3321"
+#' \dontrun{
+#' ## get the data of 10 random posts from the group "Angiotensin II Receptor Blockers"
+#' group_url = "https://patient.info/forums/discuss/browse/angiotensin-ii-receptor-blockers-3037"
 #' scrape_one_group(group_url = group_url, random_post_number = 10)
+#' }
 #'
 #' @export
 scrape_one_group <- function(group_url, random_post_number = NULL, random_seed = NULL, ...) {
@@ -121,15 +125,18 @@ scrape_one_group <- function(group_url, random_post_number = NULL, random_seed =
 #'
 #' Get posts and all the replies to the posts from groups by entering the initial letter of group names
 #'
-#' @param index The initial letter of groups. Could be one letter or a list of letters.
+#' @param index The initial letter of groups. Can be one letter or a vector of letters.
 #' @param post_number_per_group The number of random posts to scrape per group. Default is NULL, which means scrape the total number of posts in each group
 #' @param ... optional arguments to FUN.
 #'
 #' @return A data frame
 #'
 #' @examples
+#'
+#' \dontrun{
 #' ## Get the posts data of groups whose names starting with the letter "a" and "z"
-#' scrape_groups_by_initial_letter(index = c("x", "z"), post_number_per_group = 1)
+#' scrape_groups_by_initial_letter(index = "x", post_number_per_group = 1)
+#' }
 #'
 #' @export
 scrape_groups_by_initial_letter <- function(index, post_number_per_group = NULL, ...) {
@@ -151,10 +158,13 @@ scrape_groups_by_initial_letter <- function(index, post_number_per_group = NULL,
 #' @return A data frame
 #'
 #' @examples
+#'
+#' \dontrun{
 #' ## Get the posts data of groups whose names starting with the letter "a" and "z"
 #' scrape_groups_by_category(cat = "health-promotion", post_number_per_group = 1)
 #' cat_url = "https://patient.info/forums/categories/health-promotion-17"
 #' scrape_groups_by_category(cat = cat_url, post_number_per_group = 1)
+#' }
 #'
 #' @export
 scrape_groups_by_category <- function(cat, post_number_per_group = NULL, ...) {
@@ -187,8 +197,10 @@ scrape_groups_by_category <- function(cat, post_number_per_group = NULL, ...) {
 #' @return A data frame
 #'
 #' @examples
+#' \dontrun{
 #' user_profile_url <- "https://patient.info/forums/profiles/utgh4k33-1264038"
 #' scrape_user_posts(user_profile_url = user_profile_url, type = "both")
+#' }
 #'
 #' @export
 scrape_user_posts <- function(user_profile_url, type = c("both", "replies", "topic_post")) {
@@ -234,7 +246,6 @@ scrape_user_posts <- function(user_profile_url, type = c("both", "replies", "top
 #' @examples
 #' ## create a character vector
 #' medical_text <- c(
-#' "I have to go in for core biopsy next week..Can anyone tell me the likely hood based on test results?",
 #' "No, it isn't possible to predict anything before the result of your biopsy is received.",
 #' "Thank you for the nice reply! Very thoughtful answer that did ease my fears!",
 #' "Can't help regards the meds.  Just want to give support.")
@@ -245,9 +256,7 @@ scrape_user_posts <- function(user_profile_url, type = c("both", "replies", "top
 #' ## creat a data frame with a character vector named "text"
 #' df <- data.frame(
 #'   id = c(1, 2, 3, 4),
-#'   text = c("I have to go in for core biopsy next week..
-#'             Can anyone tell me the likely hood based on test results?",
-#'            "No, it isn't possible to predict anything before the result
+#'   text = c("No, it isn't possible to predict anything before the result
 #'             of your biopsy is received.",
 #'            "Thank you for the nice reply! Very thoughtful answer that
 #'             did ease my fears!",

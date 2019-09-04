@@ -1,11 +1,12 @@
-Package: patientforum
+Package: healthforum
 Type: Package
 Title: Scrape Patient Forum Data
 Version: 0.1.0
 Author: Lingshu Hu
 Authors@R: c(
     person("Lingshu", "Hu", ,
-      email = "lingshu.hu@hotmail.com", role = c("aut", "cre")),
+      email = "lingshu.hu@hotmail.com", role = c("aut", "cre"),
+      comment = c(ORCID = "0000-0003-0304-882X")), 
     person("Michael W.", "Kearney", ,
       email = "kearneymw@missouri.edu", role = c("ctb"),
       comment = c(ORCID = "0000-0002-0730-4694")))
@@ -20,7 +21,7 @@ Imports:
     purrr,
     tokenizers,
     stringr
-Depends: R (>= 2.10)
+Depends: R (>= 3.5.0)
 RoxygenNote: 6.1.1
 Suggests: 
     testthat (>= 2.1.0)
