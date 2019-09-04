@@ -3,7 +3,12 @@ Type: Package
 Title: Scrape Patient Forum Data
 Version: 0.1.0
 Author: Lingshu Hu
-Maintainer: The package maintainer <lingshu.hu@hotmail.com>
+Authors@R: c(
+    person("Lingshu", "Hu", ,
+      email = "lingshu.hu@hotmail.com", role = c("aut", "cre")),
+    person("Michael W.", "Kearney", ,
+      email = "kearneymw@missouri.edu", role = c("ctb"),
+      comment = c(ORCID = "0000-0002-0730-4694")))
 Description: Scrape data from Patient Forum (https://patient.info/forums) by entering urls. It will return a data frame containing text, user names, like counts, reply counts, etc.
 License: MIT + file LICENSE
 Encoding: UTF-8
