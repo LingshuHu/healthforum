@@ -1,0 +1,60 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%",
+  cache = TRUE
+)
+```
+
+# patientforum <img src='man/figures/logo.png' align="right" height="138.5" />
+
+<!-- badges: start -->
+[![CRAN status](https://www.r-pkg.org/badges/version/patientforum)](https://CRAN.R-project.org/package=patientforum)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![Travis build status](https://travis-ci.org/mkearney/patientforum.svg?branch=master)](https://travis-ci.org/mkearney/patientforum)
+<!-- badges: end -->
+
+The goal of patientforum is to ...
+
+## Installation
+
+You can install the released version of patientforum from [CRAN](https://CRAN.R-project.org) with:
+
+``` r
+install.packages("patientforum")
+```
+
+And the development version from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("remotes")
+remotes::install_github("LingshuHu/patientforum")
+```
+## Example
+
+This is a basic example which shows you how to scrape [this discussion thread from patient.info](https://patient.info/forums/discuss/can-gastritis-be-cured--613999).
+
+```{r example}
+## load patientforum
+library(patientforum)
+
+## scrape pages 1-2 from thread about gastritis
+gas <- scrape_one_post(
+  url = "https://patient.info/forums/discuss/can-gastritis-be-cured--613999",
+  From = 1, To = 2)
+```
+
+View the returned data
+
+```{r}
+gas
+```
+
