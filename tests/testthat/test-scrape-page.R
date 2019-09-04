@@ -1,8 +1,9 @@
 test_that("scrape_one_post works", {
   skip_on_cran()
+  skip_on_ci()
 
   gas <- scrape_one_post(
-    url = "https://patient.info/forums/discuss/can-gastritis-be-cured--613999",
+    url = "https://patient.info/forums/discuss/how-safe-is-a-colonoscopy--676942",
     From = 1, To = 2)
   expect_true(is.data.frame(gas))
   expect_gt(ncol(gas), 4)
@@ -18,6 +19,7 @@ test_that("scrape_one_post works", {
 
 test_that("scrape_one_group works", {
   skip_on_cran()
+  skip_on_ci()
 
   gas <- scrape_one_group(
     group_url = "https://patient.info/forums/discuss/browse/angiotensin-ii-receptor-blockers-3037",
@@ -36,6 +38,7 @@ test_that("scrape_one_group works", {
 
 test_that("scrape_groups_by_initial_letter works", {
   skip_on_cran()
+  skip_on_ci()
 
   gas <- scrape_groups_by_initial_letter(
     index = "x",
@@ -54,6 +57,7 @@ test_that("scrape_groups_by_initial_letter works", {
 
 test_that("scrape_groups_by_category works", {
   skip_on_cran()
+  skip_on_ci()
 
   gas <- scrape_groups_by_category(
     cat = "https://patient.info/forums/categories/health-promotion-17",
