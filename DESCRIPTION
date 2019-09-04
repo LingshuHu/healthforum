@@ -2,7 +2,6 @@ Package: healthforum
 Type: Package
 Title: Scrape Patient Forum Data
 Version: 0.1.0
-Author: Lingshu Hu
 Authors@R: c(
     person("Lingshu", "Hu", ,
       email = "lingshu.hu@hotmail.com", role = c("aut", "cre"),

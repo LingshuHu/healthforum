@@ -1,4 +1,6 @@
 test_that("scrape_one_post works", {
+  skip_on_cran()
+
   gas <- scrape_one_post(
     url = "https://patient.info/forums/discuss/can-gastritis-be-cured--613999",
     From = 1, To = 2)
@@ -15,6 +17,8 @@ test_that("scrape_one_post works", {
 
 
 test_that("scrape_one_group works", {
+  skip_on_cran()
+
   gas <- scrape_one_group(
     group_url = "https://patient.info/forums/discuss/browse/angiotensin-ii-receptor-blockers-3037",
     random_post_number = 10)
@@ -31,6 +35,8 @@ test_that("scrape_one_group works", {
 
 
 test_that("scrape_groups_by_initial_letter works", {
+  skip_on_cran()
+
   gas <- scrape_groups_by_initial_letter(
     index = "x",
     post_number_per_group = 1)
@@ -47,6 +53,8 @@ test_that("scrape_groups_by_initial_letter works", {
 
 
 test_that("scrape_groups_by_category works", {
+  skip_on_cran()
+
   gas <- scrape_groups_by_category(
     cat = "https://patient.info/forums/categories/health-promotion-17",
     post_number_per_group = 2)

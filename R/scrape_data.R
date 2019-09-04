@@ -255,7 +255,7 @@ scrape_user_posts <- function(user_profile_url, type = c("both", "replies", "top
 #'
 #' ## creat a data frame with a character vector named "text"
 #' df <- data.frame(
-#'   id = c(1, 2, 3, 4),
+#'   id = c(1, 2, 3),
 #'   text = c("No, it isn't possible to predict anything before the result
 #'             of your biopsy is received.",
 #'            "Thank you for the nice reply! Very thoughtful answer that

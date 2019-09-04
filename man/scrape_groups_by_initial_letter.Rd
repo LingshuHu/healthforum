@@ -7,7 +7,7 @@
 scrape_groups_by_initial_letter(index, post_number_per_group = NULL, ...)
 }
 \arguments{
-\item{index}{The initial letter of groups. Could be one letter or a list of letters.}
+\item{index}{The initial letter of groups. Can be one letter or a vector of letters.}
 
 \item{post_number_per_group}{The number of random posts to scrape per group. Default is NULL, which means scrape the total number of posts in each group}
 
@@ -20,7 +20,10 @@ A data frame
 Get posts and all the replies to the posts from groups by entering the initial letter of group names
 }
 \examples{
+
+\dontrun{
 ## Get the posts data of groups whose names starting with the letter "a" and "z"
-scrape_groups_by_initial_letter(index = c("x", "z"), post_number_per_group = 1)
+scrape_groups_by_initial_letter(index = "x", post_number_per_group = 1)
+}
 
 }

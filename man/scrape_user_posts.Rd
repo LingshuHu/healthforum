@@ -19,7 +19,9 @@ A data frame
 Get all posts/replies one user has sent by his/her user name
 }
 \examples{
+\dontrun{
 user_profile_url <- "https://patient.info/forums/profiles/utgh4k33-1264038"
 scrape_user_posts(user_profile_url = user_profile_url, type = "both")
+}
 
 }

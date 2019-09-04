@@ -1,4 +1,4 @@
 library(testthat)
-library(patientforum)
+library(healthforum)
 
-test_check("patientforum")
+test_check("healthforum")

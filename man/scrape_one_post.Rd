@@ -22,8 +22,10 @@ A data frame
 Get the data from one initial post by entering its url
 }
 \examples{
+\dontrun{
 ## get two pages of data from the post titled "Can Gastritis be cured?"
 post_url = "https://patient.info/forums/discuss/can-gastritis-be-cured--613999"
 scrape_one_post(url = post_url, From = 1, To = 2)
+}
 
 }

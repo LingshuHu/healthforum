@@ -20,9 +20,12 @@ A data frame
 Get posts and all the replies to the posts from groups of a category by entering category name of URL
 }
 \examples{
+
+\dontrun{
 ## Get the posts data of groups whose names starting with the letter "a" and "z"
 scrape_groups_by_category(cat = "health-promotion", post_number_per_group = 1)
 cat_url = "https://patient.info/forums/categories/health-promotion-17"
 scrape_groups_by_category(cat = cat_url, post_number_per_group = 1)
+}
 
 }

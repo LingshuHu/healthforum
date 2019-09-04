@@ -29,7 +29,6 @@ The medical glossary dictionary was obtained from Aristotelis P.
 \examples{
 ## create a character vector
 medical_text <- c(
-"I have to go in for core biopsy next week..Can anyone tell me the likely hood based on test results?",
 "No, it isn't possible to predict anything before the result of your biopsy is received.",
 "Thank you for the nice reply! Very thoughtful answer that did ease my fears!",
 "Can't help regards the meds.  Just want to give support.")
@@ -39,10 +38,8 @@ count_medical_terms(text = medical_text)
 
 ## creat a data frame with a character vector named "text"
 df <- data.frame(
-  id = c(1, 2, 3, 4),
-  text = c("I have to go in for core biopsy next week..
-            Can anyone tell me the likely hood based on test results?",
-           "No, it isn't possible to predict anything before the result
+  id = c(1, 2, 3),
+  text = c("No, it isn't possible to predict anything before the result
             of your biopsy is received.",
            "Thank you for the nice reply! Very thoughtful answer that
             did ease my fears!",
