@@ -182,7 +182,7 @@ scrape_groups_by_category <- function(cat, post_number_per_group = NULL, ...) {
     df <- do.call("rbind", df)
     return(df)
   } else {
-    return("Input error: input should be a cateogry name or a category URL")
+    stop("Input error: input should be a cateogry name or a category URL")
   }
 }
 
@@ -191,7 +191,7 @@ scrape_groups_by_category <- function(cat, post_number_per_group = NULL, ...) {
 #'
 #' Get all posts/replies one user has sent by his/her user name
 #'
-#' @param user_profile_url The URL of a user's profile page. Multiple users use c(url1, url2, ...)
+#' @param user_profile_url The URL of a user's profile page.
 #' @param type Choose a type of posts to be scraped. It includes "replies", i.e., a user's replies to others' posts, or "topic_post", i.e., a user's initial posts. The default is to get "both"
 #'
 #' @return A data frame

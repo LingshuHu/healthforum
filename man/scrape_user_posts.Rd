@@ -8,7 +8,7 @@ scrape_user_posts(user_profile_url, type = c("both", "replies",
   "topic_post"))
 }
 \arguments{
-\item{user_profile_url}{The URL of a user's profile page. Multiple users use c(url1, url2, ...)}
+\item{user_profile_url}{The URL of a user's profile page.}
 
 \item{type}{Choose a type of posts to be scraped. It includes "replies", i.e., a user's replies to others' posts, or "topic_post", i.e., a user's initial posts. The default is to get "both"}
 }
