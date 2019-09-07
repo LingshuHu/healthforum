@@ -9,7 +9,7 @@ Authors@R: c(
     person("Michael W.", "Kearney", ,
       email = "kearneymw@missouri.edu", role = c("ctb"),
       comment = c(ORCID = "0000-0002-0730-4694")))
-Description: Scrape data from Patient Forum (https://patient.info/forums) by entering urls. It will return a data frame containing text, user names, like counts, reply counts, etc.
+Description: Scrape data from Patient Forum <https://patient.info/forums> by entering urls. It will return a data frame containing text, user names, like counts, reply counts, etc.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
