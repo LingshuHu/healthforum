@@ -8,7 +8,7 @@ get_likes <- function(posts, post_action, post_count) {
   } else if (post_action & !post_count) {
     likes <- 0L
   } else {
-    likes <- NA
+    likes <- NA_integer_
   }
 }
 
@@ -16,7 +16,7 @@ get_reply_names <- function(posts, author_recipient) {
   if (author_recipient) {
     reply_names <- rvest::html_node(posts, ".author__recipient") %>% rvest::html_text()
   } else {
-    reply_names <- NA
+    reply_names <- NA_character_
   }
 }
 
@@ -56,8 +56,14 @@ get_users_information <- function(user_profile_url) {
   posts_num <- as.numeric(sub(" posts", "", date_posts[2], fixed = TRUE))
   profile_text <- rvest::html_node(profile_page, ".my-profile__row__summary") %>%
     rvest::html_text(trim = TRUE)
+  if (length(profile_text) == 0L) {
+    profile_text <- NA_character_
+  }
   group_names <- rvest::html_nodes(profile_page, ".groups-row") %>%
     rvest::html_text(trim = TRUE)
+  if (length(group_names) == 0L) {
+    group_names <- NA_character_
+  }
   group_names <- unlist(strsplit(group_names, "\r\n")) %>%
     stringr::str_trim(side = "both")
 
@@ -232,6 +238,9 @@ get_user_reply <- function(re_url) {
 
   ## reply to name
   reply_name <- rvest::html_text(rvest::html_nodes(this_user, ".author__recipient"))
+  if(length(reply_name) == 0L) {
+    reply_name <- NA_character_
+  }
 
   ## time
   time <- rvest::html_attr(rvest::html_node(this_user, "time"), "datetime")
@@ -343,11 +352,11 @@ get_user_topic_post <- function(tp_url) {
   topic_post_text <- paste(utils::head(topic_post_content, -1), sep = ' ', collapse = ' ')
 
   df_user_tpost <- data.frame(user = topic_author,
-                              reply_name = NA,
+                              reply_name = NA_character_,
                               time = NA,
-                              likes = NA,
-                              replies = NA,
-                              text = NA,
+                              likes = NA_integer_,
+                              replies = NA_integer_,
+                              text = NA_character_,
                               type = type,
                               topic_title = topic_title,
                               topic_author = topic_author,

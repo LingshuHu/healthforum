@@ -30,7 +30,7 @@ scrape_one_post <- function(url, From = 1L, To = Inf, get_user_info = TRUE) {
       )
     ## if null, wait 3 seconds
     if (is.null(df)) {
-      cat("first atempt failed. Trying again in 3 seconds...\n")
+      message("first atempt failed. Trying again in 3 seconds...\n")
       Sys.sleep(3)
       df <- tryCatch(
         get_one_page(url),
@@ -52,7 +52,7 @@ scrape_one_post <- function(url, From = 1L, To = Inf, get_user_info = TRUE) {
     )
     ## if null, wait 3 seconds
     if (is.null(page_list)) {
-      cat("first atempt failed. Trying again in 3 seconds...\n")
+      message("first atempt failed. Trying again in 3 seconds...\n")
       Sys.sleep(3)
       page_list <- tryCatch(
         lapply(urls, function(x) get_one_page(x, get_user_info)),
@@ -80,9 +80,9 @@ scrape_one_post <- function(url, From = 1L, To = Inf, get_user_info = TRUE) {
 #'
 #' @examples
 #' \dontrun{
-#' ## get the data of 10 random posts from the group "Angiotensin II Receptor Blockers"
+#' ## get the data of 5 random posts from the group "Angiotensin II Receptor Blockers"
 #' group_url = "https://patient.info/forums/discuss/browse/angiotensin-ii-receptor-blockers-3037"
-#' scrape_one_group(group_url = group_url, random_post_number = 10)
+#' scrape_one_group(group_url = group_url, random_post_number = 5)
 #' }
 #'
 #' @export
@@ -197,34 +197,44 @@ scrape_groups_by_category <- function(cat, post_number_per_group = NULL, ...) {
 #' @return A data frame
 #'
 #' @examples
-#' \dontrun{
 #' user_profile_url <- "https://patient.info/forums/profiles/utgh4k33-1264038"
 #' scrape_user_posts(user_profile_url = user_profile_url, type = "both")
-#' }
+#'
 #'
 #' @export
 scrape_user_posts <- function(user_profile_url, type = c("both", "replies", "topic_post")) {
+  ## use trycatch function
+  try_get_user_reply <- function(url) {
+    return(tryCatch(get_user_reply(url),
+    error = function(e) NULL))
+  }
+
+  try_get_user_topic_post <- function(url) {
+    return(tryCatch(get_user_topic_post(url),
+                    error = function(e) NULL))
+  }
+
   if (type == "replies") {
     re_urls <- get_re_urls(user_profile_url)
-    df_user_reply <- lapply(re_urls, get_user_reply)
+    df_user_reply <- lapply(re_urls, try_get_user_reply)
     df_user_reply <- do.call("rbind", df_user_reply)
     return(df_user_reply)
   }
 
   if (type == "topic_post") {
     tp_urls <- get_tp_urls(user_profile_url)
-    df_user_tpost <- lapply(tp_urls, get_user_topic_post)
+    df_user_tpost <- lapply(tp_urls, try_get_user_topic_post)
     df_user_tpost <- do.call("rbind", df_user_tpost)
     return(df_user_tpost[, 7:13])
   }
 
   if (type == "both") {
     re_urls <- get_re_urls(user_profile_url)
-    df_user_reply <- lapply(re_urls, get_user_reply)
+    df_user_reply <- lapply(re_urls, try_get_user_reply)
     df_user_reply <- do.call("rbind", df_user_reply)
 
     tp_urls <- get_tp_urls(user_profile_url)
-    df_user_tpost <- lapply(tp_urls, get_user_topic_post)
+    df_user_tpost <- lapply(tp_urls, try_get_user_topic_post)
     df_user_tpost <- do.call("rbind", df_user_tpost)
 
     df_user_posts <- rbind(df_user_reply, df_user_tpost)
