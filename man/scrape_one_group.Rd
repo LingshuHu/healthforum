@@ -23,7 +23,7 @@ A data frame
 Get all the posts containing all the replies to those posts from one group by entering its url.
 }
 \examples{
-\dontrun{
+\donttest{
 ## get the data of 5 random posts from the group "Angiotensin II Receptor Blockers"
 group_url = "https://patient.info/forums/discuss/browse/angiotensin-ii-receptor-blockers-3037"
 scrape_one_group(group_url = group_url, random_post_number = 5)

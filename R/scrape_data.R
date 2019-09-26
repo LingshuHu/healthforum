@@ -11,7 +11,7 @@
 #' @return A data frame
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' ## get two pages of data from the post titled "Can Gastritis be cured?"
 #' post_url = "https://patient.info/forums/discuss/can-gastritis-be-cured--613999"
 #' scrape_one_post(url = post_url, From = 1, To = 2)
@@ -79,7 +79,7 @@ scrape_one_post <- function(url, From = 1L, To = Inf, get_user_info = TRUE) {
 #' @return A data frame
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' ## get the data of 5 random posts from the group "Angiotensin II Receptor Blockers"
 #' group_url = "https://patient.info/forums/discuss/browse/angiotensin-ii-receptor-blockers-3037"
 #' scrape_one_group(group_url = group_url, random_post_number = 5)
@@ -133,7 +133,7 @@ scrape_one_group <- function(group_url, random_post_number = NULL, random_seed =
 #'
 #' @examples
 #'
-#' \dontrun{
+#' \donttest{
 #' ## Get the posts data of groups whose names starting with the letter "a" and "z"
 #' scrape_groups_by_initial_letter(index = "x", post_number_per_group = 1)
 #' }
@@ -159,7 +159,7 @@ scrape_groups_by_initial_letter <- function(index, post_number_per_group = NULL,
 #'
 #' @examples
 #'
-#' \dontrun{
+#' \donttest{
 #' ## Get the posts data of groups whose names starting with the letter "a" and "z"
 #' scrape_groups_by_category(cat = "health-promotion", post_number_per_group = 1)
 #' cat_url = "https://patient.info/forums/categories/health-promotion-17"

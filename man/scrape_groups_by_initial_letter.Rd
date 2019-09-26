@@ -21,7 +21,7 @@ Get posts and all the replies to the posts from groups by entering the initial l
 }
 \examples{
 
-\dontrun{
+\donttest{
 ## Get the posts data of groups whose names starting with the letter "a" and "z"
 scrape_groups_by_initial_letter(index = "x", post_number_per_group = 1)
 }
