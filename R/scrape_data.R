@@ -149,7 +149,7 @@ scrape_groups_by_initial_letter <- function(index, post_number_per_group = NULL,
 
 #' Scrape groups by category
 #'
-#' Get posts and all the replies to the posts from groups of a category by entering category name of URL
+#' Get posts and all the replies to the posts from groups of a category by entering category name or URL
 #'
 #' @param cat The category name (lower case, replace space with -) or category URL
 #' @param post_number_per_group The number of random posts to scrape per group. Default is NULL, which means scrape the total number of posts in each group

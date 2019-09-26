@@ -17,7 +17,7 @@ scrape_groups_by_category(cat, post_number_per_group = NULL, ...)
 A data frame
 }
 \description{
-Get posts and all the replies to the posts from groups of a category by entering category name of URL
+Get posts and all the replies to the posts from groups of a category by entering category name or URL
 }
 \examples{
 
