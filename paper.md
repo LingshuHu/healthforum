@@ -37,7 +37,7 @@ Citations to entries in paper.bib should be in
 [rMarkdown](http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html)
 format.
 
-For a quick reference, the following citation commands can be used:
+For a quick reference, the following citation commands can be used:  
 - `[@Holland:2019; @Lovatt:2017)]` -> "(Holland, 2019; Lovatt, Bath, & Ellis, 2017)"  
 - `[@Pew:2013]` -> "(Pew Research Center, 2013)"  
 - `[@Porter:2013]` -> "(Porter, 2013)"  
