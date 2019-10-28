@@ -20,7 +20,7 @@ bibliography: paper.bib
 
 # Summary
 
-Online health forums have increasingly become an important resource for individuals to obtain health and medical information in recent years [@Holland:2018; @Lovatt:2017]. For example, in the United States, one-third of adults reported that they go to online health forums to figure out their health conditions before, during, or after they visit professional doctors [@Pew:2013]. Because of their importance, studying information on health forums is necessary for health communication scholars. A wealth of studies have probed this area [@Sudau:2014; @Lovatt:2017; @Pan:2017]. 
+Online health forums have increasingly become an important resource for individuals to obtain health and medical information in recent years [@Holland:2019; @Lovatt:2017]. For example, in the United States, one-third of adults reported that they go to online health forums to figure out their health conditions before, during, or after they visit professional doctors [@Pew:2013]. Because of their importance, studying information on health forums is necessary for health communication scholars. A wealth of studies have probed this area [@Sudau:2014; @Lovatt:2017; @Pan:2017]. 
 
 However, because of the large volume of information on health forums, traditional research methods used by communication scholars, such as discourse analysis or content analysis, can hardly reveal the general map of online health discussion. Previous studies thus mainly used qualitative textual analysis [@Sudau:2014] or focused on a specific type of online health forums, such as cancer forums [@Liess:2008], or mental health forums[@Kummervold:2002]. A beneficial next step would be using big data methods to examine a broader scope of health topics in a relatively more comprehensive online health forum.  
 
@@ -38,14 +38,14 @@ Citations to entries in paper.bib should be in
 format.
 
 For a quick reference, the following citation commands can be used:
-- `[@Holland:2019; @Lovatt:2017)]` -> "(Holland, 2019; Lovatt, Bath, & Ellis, 2017)"
-- `[@Pew:2013]` -> "(Pew Research Center, 2013)"
-- `[@Porter:2013]` -> "(Porter, 2013)"
-- `[@Sudau:2014; @Lovatt:2017; @Pan:2017]` -> "(e.g., Sudau, et al., 2014; Lovatt, Bath, & Ellis, 2017; Pan, Shen, & Feng, 2017)"
-- `[@Sudau:2014]` -> "(Sudau, et al., 2014)"
-- `[@Liess:2008]` -> "(Liess, et al., 2008)"
-- `[@Kummervold:2002]` -> "(Kummervold, et al. 2002)"
-- `[@Wickham:2016]` -> "(Wickham, 2016)"
-- `[@Alexa:2019]` -> "(Alexa Internet Inc, 2019)"
+- `[@Holland:2019; @Lovatt:2017)]` -> "(Holland, 2019; Lovatt, Bath, & Ellis, 2017)"  
+- `[@Pew:2013]` -> "(Pew Research Center, 2013)"  
+- `[@Porter:2013]` -> "(Porter, 2013)"  
+- `[@Sudau:2014; @Lovatt:2017; @Pan:2017]` -> "(e.g., Sudau, et al., 2014; Lovatt, Bath, & Ellis, 2017; Pan, Shen, & Feng, 2017)"  
+- `[@Sudau:2014]` -> "(Sudau, et al., 2014)"  
+- `[@Liess:2008]` -> "(Liess, et al., 2008)"  
+- `[@Kummervold:2002]` -> "(Kummervold, et al. 2002)"  
+- `[@Wickham:2016]` -> "(Wickham, 2016)"  
+- `[@Alexa:2019]` -> "(Alexa Internet Inc, 2019)"  
 
-
+# Reference
