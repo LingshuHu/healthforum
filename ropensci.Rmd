@@ -72,16 +72,16 @@ VignetteBuilder: knitr
 	- [ ] geospatial data
 	- [ ] text analysis
 	
-- Explain how and why the package falls under these categories (briefly, 1-2 sentences):
-data retrieval: this package is used to download data from Patient.info forum.  
-data extraction: the data obtained from Patient forum is unstructured, including text, date, behavior traces, etc.  
-data munging: this package parses the unstructured data to dataframes.  
+- Explain how and why the package falls under these categories (briefly, 1-2 sentences):  
+Data retrieval: this package is used to download data from *patient.info* forum.  
+Data extraction: the data obtained from Patient forum is unstructured, including text, date, behavior traces, etc.  
+Data munging: this package parses the unstructured data to dataframes.  
 
 -   Who is the target audience and what are scientific applications of this package?  
 Health communication scholars or researchers who are interested in user-generated health information.
 
--   Are there other R packages that accomplish the same thing? If so, how does yours differ or meet [our criteria for best-in-category](https://ropensci.github.io/dev_guide/policies.html#overlap)?
-To our best knowledge, there is no other R package designed to obtain data from Patient.info forum.
+-   Are there other R packages that accomplish the same thing? If so, how does yours differ or meet [our criteria for best-in-category](https://ropensci.github.io/dev_guide/policies.html#overlap)?  
+To our best knowledge, there is no other R package designed to obtain data from *patient.info* forum.
 
 -   If you made a pre-submission enquiry, please paste the link to the corresponding issue, forum post, or other discussion, or @tag the editor you contacted.
 
@@ -99,7 +99,7 @@ Confirm each of the following by checking the box.  This package:
 
 ## Publication options
 
-- [ ] Do you intend for this package to go on CRAN?  
+- [x] Do you intend for this package to go on CRAN?  
 - [x] Do you wish to automatically submit to the [Journal of Open Source Software](http://joss.theoj.org/)? If so:
 
 <details>

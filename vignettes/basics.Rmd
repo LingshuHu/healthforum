@@ -19,22 +19,23 @@ library(healthforum)
 ```
 
 
-On *patient.info* forum, there are different levels of posts. 
+On *patient.info* forum, there are different levels of posts.  
 
-Main post: one individual user can initialize a post discussing his or her problems. 
-Reply: other users can reply to this post providing suggestions or information. 
-Nested reply: other users can also reply to the replies.
-Group: every main post belongs to a group that focuses on a specific disease or issue. For example, there are groups such as alcohol consumption, abdominal disorders, depression, and menopause.
-Category: every group belongs to a category that includes similar diseases or issues. For example, abdominal disorders belong to the category of gut, bowel and stomach, and depression belongs to the category of mental health. 
+- Main post: one individual user can initialize a post discussing his or her problems. 
+- Reply: other users can reply to this post providing suggestions or information. 
+- Nested reply: other users can also reply to the replies.
+- Group: every main post belongs to a group that focuses on a specific disease or issue. For example, there are groups such as alcohol consumption, abdominal disorders, depression, and menopause.
+- Category: every group belongs to a category that includes similar diseases or issues. For example, abdominal disorders belong to the category of gut, bowel and stomach, and depression belongs to the category of mental health. 
 
 
 This is a basic example which shows you how to scrape [the discussion thread of this main post from patient.info](https://patient.info/forums/discuss/can-gastritis-be-cured--613999).
 
-``` {r eval = FALSE}
+``` {r}
 ## scrape pages 1-2 from thread about gastritis
 gas <- scrape_one_post(
   url = "https://patient.info/forums/discuss/can-gastritis-be-cured--613999",
-  From = 1, To = 2)
+  From = 1, To = 2,
+  get_user_info = FALSE)
 
 ## preview the returned data frame
 tibble::as_tibble(gas)
