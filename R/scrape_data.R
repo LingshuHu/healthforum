@@ -134,7 +134,7 @@ scrape_one_group <- function(group_url, random_post_number = NULL, random_seed =
 #' @examples
 #'
 #' \donttest{
-#' ## Get the posts data of groups whose names starting with the letter "a" and "z"
+#' ## Get the posts data of groups whose names starting with the letter "x".
 #' scrape_groups_by_initial_letter(index = "x", post_number_per_group = 1)
 #' }
 #'
@@ -160,7 +160,7 @@ scrape_groups_by_initial_letter <- function(index, post_number_per_group = NULL,
 #' @examples
 #'
 #' \donttest{
-#' ## Get the posts data of groups whose names starting with the letter "a" and "z"
+#' ## Get the posts data of the group "health-promotion."
 #' scrape_groups_by_category(cat = "health-promotion", post_number_per_group = 1)
 #' cat_url = "https://patient.info/forums/categories/health-promotion-17"
 #' scrape_groups_by_category(cat = cat_url, post_number_per_group = 1)

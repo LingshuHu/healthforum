@@ -1,0 +1,111 @@
+---
+title: "basics"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{basics}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(healthforum)
+```
+
+
+On *patient.info* forum, there are different levels of posts. 
+
+Main post: one individual user can initialize a post discussing his or her problems. 
+Reply: other users can reply to this post providing suggestions or information. 
+Nested reply: other users can also reply to the replies.
+Group: every main post belongs to a group that focuses on a specific disease or issue. For example, there are groups such as alcohol consumption, abdominal disorders, depression, and menopause.
+Category: every group belongs to a category that includes similar diseases or issues. For example, abdominal disorders belong to the category of gut, bowel and stomach, and depression belongs to the category of mental health. 
+
+
+This is a basic example which shows you how to scrape [the discussion thread of this main post from patient.info](https://patient.info/forums/discuss/can-gastritis-be-cured--613999).
+
+``` {r}
+## scrape pages 1-2 from thread about gastritis
+gas <- scrape_one_post(
+  url = "https://patient.info/forums/discuss/can-gastritis-be-cured--613999",
+  From = 1, To = 2)
+
+## preview the returned data frame
+tibble::as_tibble(gas)
+```
+
+This is a basic example which shows you how to scrape [the discussion thread of posts from this group](https://patient.info/forums/discuss/browse/angiotensin-ii-receptor-blockers-3037).
+
+```{r}
+## scrape the threads of 5 random main posts from the group "Angiotensin II Receptor Blockers"
+gas <- scrape_one_group(
+  group_url = "https://patient.info/forums/discuss/browse/angiotensin-ii-receptor-blockers-3037", 
+  random_post_number = 5)
+
+## preview the returned data frame
+tibble::as_tibble(gas)
+```
+
+You can get posts from multiple groups whose name has the same initial letter. 
+
+```{r}
+## scrape the thread of one random post from all groups whose names starting with the letter "x".
+gas <- scrape_groups_by_initial_letter(index = "x", 
+                                       post_number_per_group = 1,
+                                       get_user_info = FALSE)
+
+## preview the returned data frame
+tibble::as_tibble(gas)
+```
+
+
+This is an example which shows you how to scrape [the discussion thread of posts from the categroy "Health Promotion"](https://patient.info/forums/categories/health-promotion-17).
+
+```{r}
+## scrape the thread of one random post from every group that belongs to the categroy "Health Promotion"
+gas <- scrape_groups_by_category(cat = "health-promotion", 
+                                 post_number_per_group = 1, 
+                                 get_user_info = FALSE)
+
+## preview the returned data frame
+tibble::as_tibble(gas)
+```
+
+You can also scrape the posts made by a specific user. 
+
+This is an example which shows you how to scrape [the posts sent by this user](https://patient.info/forums/profiles/utgh4k33-1264038).
+
+``` {r}
+## scrape the posts sent by the user utgh4k33
+userposts <- scrape_user_posts(
+  user_profile_url <- "https://patient.info/forums/profiles/utgh4k33-1264038", 
+  type = "both")
+
+## preview the returned data frame
+tibble::as_tibble(userposts)
+```
+
+`healthforum` contains a medical glossary dictionary which can be used to count the number of medical words used in a post. 
+
+This is an example which shows you how to count medical words.
+
+``` {r}
+## create a text vector
+medical_text <- c(
+"No, it isn't possible to predict anything before the result of your biopsy is received.", 
+"Thank you for the nice reply! Very thoughtful answer that did ease my fears!", 
+"Can't help regards the meds.  Just want to give support."
+)
+
+## counts the medical words in this text vector
+counts <- count_medical_terms(text = medical_text)
+
+## show results
+tibble::as_tibble(counts)
+``` 
