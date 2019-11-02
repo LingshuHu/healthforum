@@ -19,7 +19,8 @@ Imports:
     xml2,
     purrr,
     tokenizers,
-    stringr
+    stringr,
+    tibble
 Depends: R (>= 3.5.0)
 RoxygenNote: 6.1.1
 Suggests: 

@@ -1,0 +1,131 @@
+---
+title: "Ropensci"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Submitting Author: Name (@github_handle)  
+Repository:   
+Version submitted:   
+Editor: TBD  
+Reviewer 1: TBD  
+Reviewer 2: TBD  
+Archive: TBD  
+Version accepted: TBD   
+
+---
+
+-   Paste the full DESCRIPTION file inside a code block below:
+
+```
+Package: healthforum
+Type: Package
+Title: Scrape Patient Forum Data
+Version: 0.1.0
+Authors@R: c(
+    person("Lingshu", "Hu", ,
+      email = "lingshu.hu@hotmail.com", role = c("aut", "cre"),
+      comment = c(ORCID = "0000-0003-0304-882X")), 
+    person("Michael W.", "Kearney", ,
+      email = "kearneymw@missouri.edu", role = c("ctb"),
+      comment = c(ORCID = "0000-0002-0730-4694")))
+Description: Scrape data from Patient Forum <https://patient.info/forums> by entering urls. It will return a data frame containing text, user names, like counts, reply counts, etc.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    rvest,
+    magrittr,
+    xml2,
+    purrr,
+    tokenizers,
+    stringr,
+    tibble
+Depends: R (>= 3.5.0)
+RoxygenNote: 6.1.1
+Suggests: 
+    testthat (>= 2.1.0),
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+
+```
+
+
+## Scope 
+
+- Please indicate which category or categories from our [package fit policies](https://ropensci.github.io/dev_guide/policies.html#package-categories) this package falls under: (Please check an appropriate box below. If you are unsure, we suggest you make a pre-submission inquiry.):
+
+	- [x] data retrieval
+	- [x] data extraction
+	- [ ] database access
+	- [x] data munging
+	- [ ] data deposition
+	- [ ] workflow automataion
+	- [ ] version control
+	- [ ] citation management and bibliometrics
+	- [ ] scientific software wrappers
+	- [ ] database software bindings
+	- [ ] geospatial data
+	- [ ] text analysis
+	
+- Explain how and why the package falls under these categories (briefly, 1-2 sentences):
+data retrieval: this package is used to download data from Patient.info forum.  
+data extraction: the data obtained from Patient forum is unstructured, including text, date, behavior traces, etc.  
+data munging: this package parses the unstructured data to dataframes.  
+
+-   Who is the target audience and what are scientific applications of this package?  
+Health communication scholars or researchers who are interested in user-generated health information.
+
+-   Are there other R packages that accomplish the same thing? If so, how does yours differ or meet [our criteria for best-in-category](https://ropensci.github.io/dev_guide/policies.html#overlap)?
+To our best knowledge, there is no other R package designed to obtain data from Patient.info forum.
+
+-   If you made a pre-submission enquiry, please paste the link to the corresponding issue, forum post, or other discussion, or @tag the editor you contacted.
+
+## Technical checks
+
+Confirm each of the following by checking the box.  This package:
+
+- [x] does not violate the Terms of Service of any service it interacts with. 
+- [x] has a CRAN and OSI accepted license.
+- [x] contains a [README with instructions for installing the development version](https://ropensci.github.io/dev_guide/building.html#readme). 
+- [x] includes [documentation with examples for all functions](https://ropensci.github.io/dev_guide/building.html#documentation).
+- [x] contains a vignette with examples of its essential functions and uses.
+- [x] has a [test suite](https://ropensci.github.io/dev_guide/building.html#testing).
+- [x] has [continuous integration](https://ropensci.github.io/dev_guide/ci.html), including reporting of test coverage using services such as Travis CI, Coveralls and/or CodeCov.
+
+## Publication options
+
+- [ ] Do you intend for this package to go on CRAN?  
+- [x] Do you wish to automatically submit to the [Journal of Open Source Software](http://joss.theoj.org/)? If so:
+
+<details>
+ <summary>JOSS Options</summary>  
+
+  - [x] The package has an **obvious research application** according to [JOSS's definition](https://joss.readthedocs.io/en/latest/submitting.html#submission-requirements).
+    - [x] The package contains a `paper.md` matching [JOSS's requirements](https://joss.readthedocs.io/en/latest/submitting.html#what-should-my-paper-contain) with a high-level description in the package root or in `inst/`.
+    - [x] The package is deposited in a long-term repository with the DOI: 
+    - (*Do not submit your package separately to JOSS*)  
+  
+</details>
+
+- [ ] Do you wish to submit an Applications Article about your package to [Methods in Ecology and Evolution](http://besjournals.onlinelibrary.wiley.com/hub/journal/10.1111/(ISSN)2041-210X/)? If so:  
+
+<details>
+<summary>MEE Options</summary>  
+
+- [ ] The package is novel and will be of interest to the broad readership of the journal. 
+- [ ] The manuscript describing the package is no longer than 3000 words.
+- [ ] You intend to archive the code for the package in a long-term repository which meets the requirements of the journal (see [MEE's Policy on Publishing Code](http://besjournals.onlinelibrary.wiley.com/hub/journal/10.1111/(ISSN)2041-210X/journal-resources/policy-on-publishing-code.html))
+- (*Scope: Do consider MEE's [Aims and Scope](http://besjournals.onlinelibrary.wiley.com/hub/journal/10.1111/(ISSN)2041-210X/aims-and-scope/read-full-aims-and-scope.html) for your manuscript. We make no guarantee that your manuscript will be within MEE scope.*)
+- (*Although not required, we strongly recommend having a full manuscript prepared when you submit here.*)
+- (*Please do not submit your package separately to Methods in Ecology and Evolution*)
+
+</details>
+
+## Code of conduct
+
+- [x] I agree to abide by [rOpenSci's Code of Conduct](https://ropensci.github.io/dev_guide/policies.html#code-of-conduct) during the review process and in maintaining my package should it be accepted.

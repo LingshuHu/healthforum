@@ -30,7 +30,7 @@ Category: every group belongs to a category that includes similar diseases or is
 
 This is a basic example which shows you how to scrape [the discussion thread of this main post from patient.info](https://patient.info/forums/discuss/can-gastritis-be-cured--613999).
 
-``` {r}
+``` {r eval = FALSE}
 ## scrape pages 1-2 from thread about gastritis
 gas <- scrape_one_post(
   url = "https://patient.info/forums/discuss/can-gastritis-be-cured--613999",
@@ -42,11 +42,11 @@ tibble::as_tibble(gas)
 
 This is a basic example which shows you how to scrape [the discussion thread of posts from this group](https://patient.info/forums/discuss/browse/angiotensin-ii-receptor-blockers-3037).
 
-```{r}
-## scrape the threads of 5 random main posts from the group "Angiotensin II Receptor Blockers"
+```{r eval = FALSE}
+## scrape the thread of a random main posts from the group "Angiotensin II Receptor Blockers"
 gas <- scrape_one_group(
   group_url = "https://patient.info/forums/discuss/browse/angiotensin-ii-receptor-blockers-3037", 
-  random_post_number = 5)
+  random_post_number = 1)
 
 ## preview the returned data frame
 tibble::as_tibble(gas)
@@ -54,7 +54,7 @@ tibble::as_tibble(gas)
 
 You can get posts from multiple groups whose name has the same initial letter. 
 
-```{r}
+```{r eval = FALSE}
 ## scrape the thread of one random post from all groups whose names starting with the letter "x".
 gas <- scrape_groups_by_initial_letter(index = "x", 
                                        post_number_per_group = 1,
@@ -67,7 +67,7 @@ tibble::as_tibble(gas)
 
 This is an example which shows you how to scrape [the discussion thread of posts from the categroy "Health Promotion"](https://patient.info/forums/categories/health-promotion-17).
 
-```{r}
+```{r eval = FALSE}
 ## scrape the thread of one random post from every group that belongs to the categroy "Health Promotion"
 gas <- scrape_groups_by_category(cat = "health-promotion", 
                                  post_number_per_group = 1, 
@@ -81,7 +81,7 @@ You can also scrape the posts made by a specific user.
 
 This is an example which shows you how to scrape [the posts sent by this user](https://patient.info/forums/profiles/utgh4k33-1264038).
 
-``` {r}
+``` {r eval = FALSE}
 ## scrape the posts sent by the user utgh4k33
 userposts <- scrape_user_posts(
   user_profile_url <- "https://patient.info/forums/profiles/utgh4k33-1264038", 
@@ -91,7 +91,7 @@ userposts <- scrape_user_posts(
 tibble::as_tibble(userposts)
 ```
 
-`healthforum` contains a medical glossary dictionary which can be used to count the number of medical words used in a post. 
+`healthforum` contains a medical glossary dictionary which can be used to count the number of medical words used in posts. 
 
 This is an example which shows you how to count medical words.
 
