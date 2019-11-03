@@ -8,3 +8,6 @@
 ^CRAN-RELEASE$
 ^appveyor\.yml$
 ^\.travis\.yml$
+^ropensci\.Rmd$
+^paper\.md$
+^paper\.bib$
