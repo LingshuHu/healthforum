@@ -4,7 +4,7 @@ healthforum <img src='man/figures/logo.png' align="right" height="138.5" />
 ===========================================================================
 
 <!-- badges: start -->
-[![CRAN status](https://www.r-pkg.org/badges/version/healthforum)](https://CRAN.R-project.org/package=healthforum) [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental) [![Travis build status](https://travis-ci.org/mkearney/healthforum.svg?branch=master)](https://travis-ci.org/mkearney/healthforum) <!-- badges: end -->
+[![CRAN status](https://www.r-pkg.org/badges/version/healthforum)](https://CRAN.R-project.org/package=healthforum) [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental) [![Travis build status](https://travis-ci.org/mkearney/healthforum.svg?branch=master)](https://travis-ci.org/mkearney/healthforum) [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/LingshuHu/healthforum?branch=master&svg=true)](https://ci.appveyor.com/project/LingshuHu/healthforum) <!-- badges: end -->
 
 A package for scraping patientforum discussion threads.
 
@@ -60,3 +60,8 @@ tibble::as_tibble(gas)
 #> # ... with 336 more rows, and 5 more variables: post_title <chr>, join_date <dttm>,
 #> #   posts_num <dbl>, profile_text <chr>, group_names <chr>
 ```
+
+Disclaimer
+----------
+
+`healthforum` was developed to collect publicly available data from the website *patient.info*. The purpose of this package is to facilitate academic research. It is the final user's responsibility to store the data securely and obey all applicable local, state, and federal laws.
