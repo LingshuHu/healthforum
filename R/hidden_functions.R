@@ -53,7 +53,7 @@ get_users_information <- function(user_profile_url) {
     rvest::html_text(trim = TRUE)
   join_date <- sub("Joined ", "", date_posts[1], fixed = TRUE) %>%
     as.POSIXct(tryFormats = "%d-%m-%Y")
-  posts_num <- as.numeric(sub(" posts", "", date_posts[2], fixed = TRUE))
+  posts_num <- as.numeric(sub(" posts?", "", date_posts[2], fixed = FALSE))
   profile_text <- rvest::html_node(profile_page, ".my-profile__row__summary") %>%
     rvest::html_text(trim = TRUE)
   if (length(profile_text) == 0L) {

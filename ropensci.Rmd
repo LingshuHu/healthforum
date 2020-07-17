@@ -7,9 +7,9 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Submitting Author: Name (@github_handle)  
-Repository:   
-Version submitted:   
+Submitting Author: Lingshu Hu; Michael W. Kearney (LingshuHu@github_handle)  
+Repository: https://github.com/LingshuHu/healthforum    
+Version submitted: 0.1.0     
 Editor: TBD  
 Reviewer 1: TBD  
 Reviewer 2: TBD  
