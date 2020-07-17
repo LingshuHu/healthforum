@@ -86,20 +86,22 @@ scrape_one_post <- function(url, From = 1L, To = Inf, get_user_info = TRUE) {
 #' }
 #'
 #' @export
-scrape_one_group <- function(group_url, random_post_number = NULL, random_seed = NULL, ...) {
+scrape_one_group <- function(group_url, random_post_number = NULL, random_seed = NULL, From = 1L, To = Inf, get_user_info = TRUE, ...) {
   ## examine the validity of the input url
   patient.info_url_group(group_url)
   ## get all post urls in one topic group
   post_urls <- unlist(get_posts_urls(group_url))
+  ## initialize scrape_one_post function
+  #scrape_one_post <- scrape_one_post(url, From = 1L, To = Inf, get_user_info = TRUE)
   ## without random_post_number command
   if (is.null(random_post_number)) {
-    group_data <- lapply(post_urls, scrape_one_post)
+    group_data <- lapply(post_urls, function(x) scrape_one_post(x, From, To, get_user_info))
     df <- do.call("rbind", group_data)
     df$group <- sub(".*browse/(.+)-\\d+", "\\1", group_url)
     return(df)
   ## if random_post_number is larger than the total number of posts, just scrape all the posts
   } else if (random_post_number >= length(post_urls)) {
-    group_data <- lapply(post_urls, scrape_one_post)
+    group_data <- lapply(post_urls, function(x) scrape_one_post(x, From, To, get_user_info))
     df <- do.call("rbind", group_data)
     df$group <- sub(".*browse/(.+)-\\d+", "\\1", group_url)
     return(df)
@@ -107,13 +109,13 @@ scrape_one_group <- function(group_url, random_post_number = NULL, random_seed =
     if (!is.null(random_seed)) {
       set.seed(random_seed)
       post_urls_random <- base::sample(post_urls, random_post_number, replace = FALSE)
-      group_data <- lapply(post_urls_random, scrape_one_post)
+      group_data <- lapply(post_urls_random, function(x) scrape_one_post(x, From, To, get_user_info))
       df <- do.call("rbind", group_data)
       df$group <- sub(".*browse/(.+)-\\d+", "\\1", group_url)
       return(df)
     } else {
       post_urls_random <- base::sample(post_urls, random_post_number, replace = FALSE)
-      group_data <- lapply(post_urls_random, scrape_one_post)
+      group_data <- lapply(post_urls_random, function(x) scrape_one_post(x, From, To, get_user_info))
       df <- do.call("rbind", group_data)
       df$group <- sub(".*browse/(.+)-\\d+", "\\1", group_url)
       return(df)

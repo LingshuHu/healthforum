@@ -32,7 +32,7 @@ get_replies_and_type <- function(posts, class_post_root, class_post) {
     }
     types <- "reply"
   } else if (class_post) {
-    replies <- as.numeric(sub(".*\\s(\\d+)\\sreplies", "\\1",
+    replies <- as.numeric(sub(".*\\s(\\d+)\\srepl(ies|y)", "\\1",
                                  rvest::html_text(
                                    rvest::html_nodes(posts, ".post__stats")
                                    )[2]
