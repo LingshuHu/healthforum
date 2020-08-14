@@ -86,7 +86,11 @@ scrape_one_post <- function(url, From = 1L, To = Inf, get_user_info = TRUE) {
 #' }
 #'
 #' @export
-scrape_one_group <- function(group_url, random_post_number = NULL, random_seed = NULL, From = 1L, To = Inf, get_user_info = TRUE, ...) {
+scrape_one_group <- function(group_url,
+                             random_post_number = NULL,
+                             random_seed = NULL,
+                             get_user_info = TRUE,
+                             ...) {
   ## examine the validity of the input url
   patient.info_url_group(group_url)
   ## get all post urls in one topic group
@@ -95,13 +99,13 @@ scrape_one_group <- function(group_url, random_post_number = NULL, random_seed =
   #scrape_one_post <- scrape_one_post(url, From = 1L, To = Inf, get_user_info = TRUE)
   ## without random_post_number command
   if (is.null(random_post_number)) {
-    group_data <- lapply(post_urls, function(x) scrape_one_post(x, From, To, get_user_info))
+    group_data <- lapply(post_urls, function(x) scrape_one_post(x, get_user_info = get_user_info, ...))
     df <- do.call("rbind", group_data)
     df$group <- sub(".*browse/(.+)-\\d+", "\\1", group_url)
     return(df)
   ## if random_post_number is larger than the total number of posts, just scrape all the posts
   } else if (random_post_number >= length(post_urls)) {
-    group_data <- lapply(post_urls, function(x) scrape_one_post(x, From, To, get_user_info))
+    group_data <- lapply(post_urls, function(x) scrape_one_post(x, get_user_info = get_user_info, ...))
     df <- do.call("rbind", group_data)
     df$group <- sub(".*browse/(.+)-\\d+", "\\1", group_url)
     return(df)
@@ -109,13 +113,13 @@ scrape_one_group <- function(group_url, random_post_number = NULL, random_seed =
     if (!is.null(random_seed)) {
       set.seed(random_seed)
       post_urls_random <- base::sample(post_urls, random_post_number, replace = FALSE)
-      group_data <- lapply(post_urls_random, function(x) scrape_one_post(x, From, To, get_user_info))
+      group_data <- lapply(post_urls_random, function(x) scrape_one_post(x, get_user_info = get_user_info, ...))
       df <- do.call("rbind", group_data)
       df$group <- sub(".*browse/(.+)-\\d+", "\\1", group_url)
       return(df)
     } else {
       post_urls_random <- base::sample(post_urls, random_post_number, replace = FALSE)
-      group_data <- lapply(post_urls_random, function(x) scrape_one_post(x, From, To, get_user_info))
+      group_data <- lapply(post_urls_random, function(x) scrape_one_post(x, get_user_info = get_user_info, ...))
       df <- do.call("rbind", group_data)
       df$group <- sub(".*browse/(.+)-\\d+", "\\1", group_url)
       return(df)
@@ -144,12 +148,19 @@ scrape_one_group <- function(group_url, random_post_number = NULL, random_seed =
 #' }
 #'
 #' @export
-scrape_groups_by_category <- function(cat, post_number_per_group = NULL, ...) {
+scrape_groups_by_category <- function(cat,
+                                      post_number_per_group = NULL,
+                                      random_post_number = NULL,
+                                      random_seed = NULL,
+                                      get_user_info = TRUE,
+                                      ...) {
   stopifnot(is.character(cat))
   cat_names <- get_category_urls()
   if (grepl("^http", cat) && grepl("patient\\.info/forums/categories", cat)) {
     group_urls <- get_group_urls_in_one_category(cat)
-    df <- lapply(group_urls, scrape_one_group, random_post_number = post_number_per_group)
+    df <- lapply(group_urls, scrape_one_group,
+                 random_post_number = post_number_per_group,
+                 get_user_info = get_user_info)
     df <- do.call("rbind", df)
     return(df)
   } else if (cat %in% cat_names$cat_names) {
