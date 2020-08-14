@@ -123,31 +123,6 @@ scrape_one_group <- function(group_url, random_post_number = NULL, random_seed =
   }
 }
 
-#' Scrape groups by initial letter
-#'
-#' Get posts and all the replies to the posts from groups by entering the initial letter of group names
-#'
-#' @param index The initial letter of groups. Can be one letter or a vector of letters.
-#' @param post_number_per_group The number of random posts to scrape per group. Default is NULL, which means scrape the total number of posts in each group
-#' @param ... optional arguments to FUN.
-#'
-#' @return A data frame
-#'
-#' @examples
-#'
-#' \donttest{
-#' ## Get the posts data of groups whose names starting with the letter "x".
-#' scrape_groups_by_initial_letter(index = "x", post_number_per_group = 1)
-#' }
-#'
-#' @export
-scrape_groups_by_initial_letter <- function(index, post_number_per_group = NULL, ...) {
-  group_urls <- get_group_urls_by_initial_letter(index)[, 2]
-  df <- lapply(group_urls, scrape_one_group, random_post_number = post_number_per_group)
-  df <- do.call("rbind", df)
-  return(df)
-}
-
 
 #' Scrape groups by category
 #'

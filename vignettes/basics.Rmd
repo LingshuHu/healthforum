@@ -113,4 +113,4 @@ tibble::as_tibble(counts)
 
 
 ### Disclaimer
-`healthforum` was developed to collect publicly available data from the website *patient.info*. The purpose of this package is to facilitate academic research. It is the final user's responsibility to store the data securely and obey all applicable local, state, and federal laws. 
+`healthforum` was developed to collect publicly available data from the website *patient.info*. The purpose of this package is to facilitate academic research. It is the final user's responsibility to store the data securely and obey all applicable local, state, and federal laws. For informed consent procedures for using patients.info forum data, please contact Data Protection Officer, Fulford Grange, Micklefield Lane, Rawdon, Leeds, LS19 6BA. Email: privacy@emishealth.com.

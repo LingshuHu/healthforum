@@ -4,7 +4,9 @@
 \alias{scrape_groups_by_category}
 \title{Scrape groups by category}
 \usage{
-scrape_groups_by_category(cat, post_number_per_group = NULL, ...)
+scrape_groups_by_category(cat, post_number_per_group = NULL,
+  random_post_number = NULL, random_seed = NULL,
+  get_user_info = TRUE, ...)
 }
 \arguments{
 \item{cat}{The category name (lower case, replace space with -) or category URL}

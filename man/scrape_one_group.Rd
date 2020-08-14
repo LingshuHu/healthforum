@@ -5,8 +5,7 @@
 \title{Scrape one group}
 \usage{
 scrape_one_group(group_url, random_post_number = NULL,
-  random_seed = NULL, From = 1L, To = Inf, get_user_info = TRUE,
-  ...)
+  random_seed = NULL, get_user_info = TRUE, ...)
 }
 \arguments{
 \item{group_url}{URL to the page to scrape.}

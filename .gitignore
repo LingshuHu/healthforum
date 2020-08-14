@@ -5,4 +5,5 @@
 .DS_Store
 README_cache
 healthforum.Rproj
+deprecated_functions.R
 inst/doc
