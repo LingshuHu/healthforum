@@ -1,6 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-healthforum <img src='man/figures/logo.png' align="right" height="138.5" />
+healthforum <img src='man/figures/logo_new.png' align="right" height="138.5" />
 ===========================================================================
 
 <!-- badges: start -->
